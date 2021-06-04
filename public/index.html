@@ -5,7 +5,7 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>Salon-Vivien</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="css/style.css" media="screen" rel="stylesheet">
 </head>
 <body>
@@ -15,13 +15,13 @@
     <a class="nav-logo" href="#">Salon-Vivien</a>
     <ul class="nav-menu">
       <li class="nav-item">
-        <a class="nav-link" href="#">Domov</a>
+        <a class="nav-link" href="#home">Domov</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Svadobné šaty</a>
+        <a class="nav-link" href="#wedding">Svadobné šaty</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Spoločenské šaty</a>
+        <a class="nav-link" href="#social">Spoločenské šaty</a>
       </li>
       <li class="nav-item">
         <div class="nav-dropdown">
@@ -41,10 +41,10 @@
 
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Šaty na 1.sv. prijímanie</a>
+        <a class="nav-link" href="#first">Šaty na 1.sv. prijímanie</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Kontakt</a>
+        <a class="nav-link" href="#contact">Kontakt</a>
       </li>
     </ul>
     <div class="hamburger">
@@ -58,10 +58,6 @@
 <main id="router-view"></main>
 
 <footer>Copyright Salon-Vivien 2021</footer>
-
-<script id="template-home" type="text/template">
-  <p>Hello from template home.</p>
-</script>
 
 <script src="js/index.js" type="module"></script>
 
@@ -85,6 +81,5 @@
         navMenu.classList.remove("active");
     }
 </script>
-
 </body>
 </html>
