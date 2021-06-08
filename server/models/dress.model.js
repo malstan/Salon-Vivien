@@ -10,7 +10,7 @@ const Dress = function (dress) {
     this.size = dress.size;
     this.color = dress.color;
     this.description = dress.description;
-    this.sale = dress.sale;
+    this.price = dress.price;
     this.photo = dress.photo;
     this.category = dress.category;
 };
@@ -30,14 +30,26 @@ Dress.getAll = result => {
 
 /* create new row in dress */
 Dress.create = (newDress, result) => {
-    sql.query("INSERT INTO dress SET ?", newDress, (err, res) => {
+    sql.query("SELECT count(*) AS dressesCount FROM dress WHERE name=?", newDress.name, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
+        } else if (res[0].dressesCount > 0) {
+            console.log("Dress already exists.");
+            result({kind: "exist"}, null);
+            return;
         }
-        console.log("Dress created.")
-        result(null, {id: res.insertId, dress: newDress});
+
+        sql.query("INSERT INTO dress SET ?", newDress, (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(err, null);
+                return;
+            }
+            console.log("Dress created.")
+            result(null, {id: res.insertId, dress: newDress});
+        });
     });
 };
 
@@ -74,8 +86,8 @@ Dress.getById = (dressId, result) => {
 
 /* update row by id from dress */
 Dress.update = (dressId, dress, result) => {
-    sql.query("UPDATE dress SET name=?, size=?, color=?, description=?, sale=?, photo=?, category=? WHERE dress_id=?",
-        [dress.name, dress.size, dress.color, dress.description, dress.sale, dress.photo, dress.category, dressId],
+    sql.query("UPDATE dress SET name=?, size=?, color=?, description=?, price=?, photo=?, category=? WHERE dress_id=?",
+        [dress.name, dress.size, dress.color, dress.description, dress.price, dress.photo, dress.category, dressId],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);

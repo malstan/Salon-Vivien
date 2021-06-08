@@ -4,6 +4,7 @@
 
 const Dress = require("../models/dress.model");
 
+// GET - all dresses
 exports.getAll = (req, res) => {
     Dress.getAll((err, data) => {
         if (err)
@@ -13,6 +14,7 @@ exports.getAll = (req, res) => {
     });
 };
 
+// POST - new dress
 exports.create = (req, res) => {
     if (!req.body)
         res.status(400).send({message: "Content can not be empty!"});
@@ -22,19 +24,23 @@ exports.create = (req, res) => {
         size: req.body.size,
         color: req.body.color,
         description: req.body.description,
-        sale: req.body.sale,
+        price: req.body.price,
         photo: req.body.photo,
         category: req.body.category
     });
 
     Dress.create(dress, (err, data) => {
         if (err)
-            res.status(500).send({message: err.message || "Some error occured while creating the Dress."});
+            if (err.kind === "exist")
+                res.status(507).send({message: `Dress with name ${req.body.name} already exists in database`})
+            else
+                res.status(500).send({message: err.message || "Some error occured while creating the Dress."});
         else
             res.send(data);
     });
 };
 
+// GET - by category
 exports.getByCategory = (req, res) => {
     Dress.getByCategory(req.params.category, (err, data) => {
         if (err) {
@@ -47,6 +53,7 @@ exports.getByCategory = (req, res) => {
     });
 };
 
+// GET - by id
 exports.getById = (req, res) => {
     Dress.getById(req.params.dressId, (err, data) => {
         if (err) {
@@ -59,6 +66,7 @@ exports.getById = (req, res) => {
     });
 };
 
+// PUT - update dress with id
 exports.update = (req, res) => {
     if (!req.body)
         res.status(400).send({message: "Content can not be empty!"});
@@ -74,6 +82,7 @@ exports.update = (req, res) => {
     });
 };
 
+// DELETE - dress with id
 exports.delete = (req, res) => {
     Dress.delete(req.params.dressId, (err, data) => {
        if (err) {
