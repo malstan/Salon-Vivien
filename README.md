@@ -36,7 +36,7 @@ javascript router s mustache sablonami
 
 back-end:
 databaza - mysql
-    tabulka -> dress (dress_id, name, size, color, description, sale, photo, category)
+    tabulka -> dress (dress_id, name, size, color, description, price, photo, category)
             -> category (category_id, category)
 
 REST API pomocou node.js

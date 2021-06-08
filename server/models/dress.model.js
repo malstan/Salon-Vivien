@@ -1,5 +1,6 @@
 /**
- * CRUD functions
+ * Dress definition
+ * CRUD operations
  */
 
 const sql = require("./db");
@@ -23,7 +24,7 @@ Dress.getAll = result => {
             return;
         }
         console.log("Dresses returned.")
-        result(null, res);
+        result(null, {dresses: res});
     });
 };
 
@@ -36,7 +37,7 @@ Dress.create = (newDress, result) => {
             return;
         }
         console.log("Dress created.")
-        result(null, {id: res.insertId, ...newDress});
+        result(null, {id: res.insertId, dress: newDress});
     });
 };
 
@@ -48,8 +49,7 @@ Dress.getByCategory = (category, result) => {
             result(err, null);
             return;
         }
-        console.log(`Dresses of category ${category} returned.`);
-        result(null, res);
+        result(null, {dresses: res});
     });
 };
 
@@ -63,7 +63,7 @@ Dress.getById = (dressId, result) => {
         }
         if (res.length) {
             console.log("Dress found.");
-            result(null, res[0]);
+            result(null, {dress: res[0]});
             return;
         }
 
@@ -88,7 +88,7 @@ Dress.update = (dressId, dress, result) => {
                 return;
             }
             console.log("Dress updated.");
-            result(null, {id: dressId, ...dress});
+            result(null, {id: dressId, dress: dress});
         });
 };
 
@@ -106,7 +106,7 @@ Dress.delete = (dressId, result) => {
             return;
         }
         console.log("Dress removed.");
-        result(null, res);
+        result(null, {id: dressId, response: res});
     })
 }
 

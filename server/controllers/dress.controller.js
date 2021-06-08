@@ -1,3 +1,7 @@
+/**
+ * controller for CRUD operations
+ */
+
 const Dress = require("../models/dress.model");
 
 exports.getAll = (req, res) => {
