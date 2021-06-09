@@ -1,3 +1,6 @@
+/**
+ * configuration for multer
+ */
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -5,13 +8,19 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => cb(null, file.originalname),
 });
 
-const filter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image"))
-        cb(null, true);
-    else
-        cb("Please upload only images.", false);
-};
+const uploading = multer({
+    storage: storage,
+    limits: {fileSize: 5 * 1000 * 1000},
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg")
+            cb(null, true);
+        else {
+            cb(null, false);
+            const err = new Error("Only .png, .jpg, .jpeg format allowed!");
+            err.name = "ExtensionError";
+            return cb(err);
+        }
+    },
+}).array("images", 10);
 
-const upload = multer({storage: storage, filter: filter});
-
-module.exports = upload;
+module.exports = uploading;
