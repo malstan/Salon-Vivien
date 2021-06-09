@@ -6,15 +6,19 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true, }));
+app.use(bodyParser.urlencoded({extended: true,}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/images', express.static('./public/figures/uploads'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/index.html");
-});
+app.get('/', (req, res) =>
+    res.sendFile(__dirname + "/public/index.html")
+);
 
 require("./server/routes/dress.routes")(app);
 require("./server/routes/image.routes")(app);
+
+app.all("*", (req, res) =>
+    res.status(400).send({message: "Bad request!"})
+);
 
 app.listen(port, () => console.log('server listens on port ' + port));

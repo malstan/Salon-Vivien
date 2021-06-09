@@ -16,7 +16,7 @@ exports.getAll = (req, res) => {
 
 // POST - new dress
 exports.create = (req, res) => {
-    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)){
+    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)) {
         res.status(400).send({message: "Content must be have specific structure!"});
         return;
     }
@@ -49,7 +49,7 @@ exports.getByCategory = (req, res) => {
         return;
     }
 
-    if(req.query.limit) {
+    if (req.query.limit) {
         parameters.limit = req.query.limit;
         if (req.query.offset)
             parameters.offset = req.query.offset;
@@ -89,7 +89,7 @@ exports.getById = (req, res) => {
 
 // PUT - update dress with id
 exports.update = (req, res) => {
-    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)){
+    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)) {
         res.status(400).send({message: "Content must be have specific structure!"});
         return;
     }
@@ -111,13 +111,13 @@ exports.update = (req, res) => {
     });
 
     Dress.update(dressId, dress, (err, data) => {
-         if (err) {
-             if (err.kind === "not_found")
-                 res.status(404).send({ message: `Dress with id ${dressId} not found.` });
-             else
-                 res.status(500).send({ message: `Error updating Dress with id ${dressId}.` });
-         } else
-             res.send(data);
+        if (err) {
+            if (err.kind === "not_found")
+                res.status(404).send({message: `Dress with id ${dressId} not found.`});
+            else
+                res.status(500).send({message: `Error updating Dress with id ${dressId}.`});
+        } else
+            res.send(data);
     });
 };
 
@@ -130,12 +130,12 @@ exports.delete = (req, res) => {
     }
 
     Dress.delete(dressId, (err, data) => {
-       if (err) {
-           if (err.kind === "not_found")
-               res.status(404).send({ message: `Dress with id ${dressId} not found.` });
-           else
-               res.status(500).send({ message: `Error deleting Dress with id ${dressId}.` });
-       } else
-           res.send(data);
+        if (err) {
+            if (err.kind === "not_found")
+                res.status(404).send({message: `Dress with id ${dressId} not found.`});
+            else
+                res.status(500).send({message: `Error deleting Dress with id ${dressId}.`});
+        } else
+            res.send(data);
     });
 };
