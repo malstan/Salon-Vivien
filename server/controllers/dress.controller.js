@@ -16,9 +16,10 @@ exports.getAll = (req, res) => {
 
 // POST - new dress
 exports.create = (req, res) => {
-    if (!req.body)
-        res.status(400).send({message: "Content can not be empty!"});
-
+    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)){
+        res.status(400).send({message: "Content must be have specific structure!"});
+        return;
+    }
     const dress = new Dress({
         name: req.body.name,
         size: req.body.size,
@@ -31,8 +32,8 @@ exports.create = (req, res) => {
 
     Dress.create(dress, (err, data) => {
         if (err)
-            if (err.kind === "exist")
-                res.status(507).send({message: `Dress with name ${req.body.name} already exists in database`})
+            if (err.kind === "exists")
+                res.status(507).send({message: `Dress with name ${req.body.name} already exists in database.`})
             else
                 res.status(500).send({message: err.message || "Some error occured while creating the Dress."});
         else
@@ -42,12 +43,26 @@ exports.create = (req, res) => {
 
 // GET - by category
 exports.getByCategory = (req, res) => {
-    Dress.getByCategory(req.params.category, (err, data) => {
+    const parameters = {category: req.params.category};
+    if (!parameters.category || isNaN(parameters.category)) {
+        res.status(400).send({message: "Parameter must be number!"});
+        return;
+    }
+
+    if(req.query.limit) {
+        parameters.limit = req.query.limit;
+        if (req.query.offset)
+            parameters.offset = req.query.offset;
+        else
+            parameters.offset = 0;
+    }
+
+    Dress.getByCategory(parameters, (err, data) => {
         if (err) {
             if (err.kind === "not_found")
-                res.status(404).send({message: `Not found Dresses with category id ${req.params.category}`});
+                res.status(404).send({message: `Dresses with category id ${parameters.category} not found.`});
             else
-                res.status(500).send({message: `Error retrieving Dresses with category id ${req.params.category}`});
+                res.status(500).send({message: `Error retrieving Dresses with category id ${parameters.category}.`});
         } else
             res.send(data);
     });
@@ -55,12 +70,18 @@ exports.getByCategory = (req, res) => {
 
 // GET - by id
 exports.getById = (req, res) => {
-    Dress.getById(req.params.dressId, (err, data) => {
+    const dressId = req.params.dressId;
+    if (!dressId || isNaN(dressId)) {
+        res.status(400).send({message: "Parameter must be number!"});
+        return;
+    }
+
+    Dress.getById(dressId, (err, data) => {
         if (err) {
             if (err.kind === "not_found")
-                res.status(404).send({message: `Not found Dress with id ${req.params.dressId}`});
+                res.status(404).send({message: `Dress with id ${dressId} not found.`});
             else
-                res.status(500).send({message: `Error retrieving Dress with id ${req.params.dressId}`});
+                res.status(500).send({message: `Error retrieving Dress with id ${dressId}.`});
         } else
             res.send(data);
     });
@@ -68,15 +89,33 @@ exports.getById = (req, res) => {
 
 // PUT - update dress with id
 exports.update = (req, res) => {
-    if (!req.body)
-        res.status(400).send({message: "Content can not be empty!"});
+    if (!req.body || !req.body.name || !req.body.color || !req.body.photo || !req.body.category || isNaN(req.body.category)){
+        res.status(400).send({message: "Content must be have specific structure!"});
+        return;
+    }
 
-    Dress.update(req.params.dressId, new Dress(req.body), (err, data) => {
+    const dressId = req.params.dressId;
+    if (!dressId || isNaN(dressId)) {
+        res.status(400).send({message: "Parameter must be number!"});
+        return;
+    }
+
+    const dress = new Dress({
+        name: req.body.name,
+        size: req.body.size,
+        color: req.body.color,
+        description: req.body.description,
+        price: req.body.price,
+        photo: req.body.photo,
+        category: req.body.category
+    });
+
+    Dress.update(dressId, dress, (err, data) => {
          if (err) {
              if (err.kind === "not_found")
-                 res.status(404).send({ message: `Not found Dress with id ${req.params.dressId}` });
+                 res.status(404).send({ message: `Dress with id ${dressId} not found.` });
              else
-                 res.status(500).send({ message: `Error updating Dress with id ${req.params.dressId}` });
+                 res.status(500).send({ message: `Error updating Dress with id ${dressId}.` });
          } else
              res.send(data);
     });
@@ -84,12 +123,19 @@ exports.update = (req, res) => {
 
 // DELETE - dress with id
 exports.delete = (req, res) => {
-    Dress.delete(req.params.dressId, (err, data) => {
+    const dressId = req.params.dressId;
+    if (!dressId || isNaN(dressId)) {
+        res.status(400).send({message: "Parameter must be number!"});
+        return;
+    }
+
+    Dress.delete(dressId, (err, data) => {
        if (err) {
            if (err.kind === "not_found")
-               res.status(404).send({ message: `Not found Dress with id ${req.params.dressId}` });
-           else res.status(500).send({ message: `Error deleting Dress with id ${req.params.dressId}` });
+               res.status(404).send({ message: `Dress with id ${dressId} not found.` });
+           else
+               res.status(500).send({ message: `Error deleting Dress with id ${dressId}.` });
        } else
-           res.send({ message: `Dress with id ${req.params.dressId} was deleted successfully.` });
+           res.send(data);
     });
 };

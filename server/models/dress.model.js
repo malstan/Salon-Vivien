@@ -21,66 +21,76 @@ Dress.getAll = result => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
-            return;
+        } else {
+            console.log("Dresses returned.")
+            result(null, {dresses: res});
         }
-        console.log("Dresses returned.")
-        result(null, {dresses: res});
     });
 };
 
 /* create new row in dress */
-Dress.create = (newDress, result) => {
-    sql.query("SELECT count(*) AS dressesCount FROM dress WHERE name=?", newDress.name, (err, res) => {
+Dress.create = (dress, result) => {
+    sql.query("SELECT count(*) AS dressesCount FROM dress WHERE name=?", dress.name,(err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
-            return;
-        } else if (res[0].dressesCount > 0) {
+        } else if (res[0].dressesCount !== 0) {
             console.log("Dress already exists.");
-            result({kind: "exist"}, null);
-            return;
+            result({kind: "exists"}, null);
+        } else {
+            sql.query("INSERT INTO dress SET ?", dress, (err, res) => {
+                if (err) {
+                    console.log("error: ", err);
+                    result(err, null);
+                } else {
+                    console.log("Dress created.")
+                    result(null, {id: res.insertId, dress: dress});
+                }
+            });
         }
-
-        sql.query("INSERT INTO dress SET ?", newDress, (err, res) => {
-            if (err) {
-                console.log("error: ", err);
-                result(err, null);
-                return;
-            }
-            console.log("Dress created.")
-            result(null, {id: res.insertId, dress: newDress});
-        });
     });
 };
 
 /* get rows by category from dress */
-Dress.getByCategory = (category, result) => {
-    sql.query(`SELECT * FROM dress WHERE category = ${category}`, (err, res) => {
-        if (err) {
-            console.log("error: ", err);
-            result(err, null);
-            return;
-        }
-        result(null, {dresses: res});
-    });
+Dress.getByCategory = (params, result) => {
+    if (!isNaN(params.limit) && !isNaN(params.offset)) {
+        sql.query(`SELECT * FROM dress WHERE category=${params.category} LIMIT ${params.limit} OFFSET ${params.offset}`,
+            (err, res) => {
+                if (err) {
+                    console.log("error: ", err);
+                    result(err, null);
+                } else if (res.length === 0)
+                    result({kind: "not_found"}, null);
+                else
+                    result(null, {dresses: res});
+        });
+    } else {
+        sql.query("SELECT * FROM dress WHERE category=?", params.category, (err, res) => {
+            if (err) {
+                console.log("error: ", err);
+                result(err, null);
+            } else if (res.length === 0)
+                result({kind: "not_found"}, null);
+            else
+                result(null, {dresses: res});
+        });
+    }
 };
 
 /* get one row by id from dress*/
 Dress.getById = (dressId, result) => {
-    sql.query(`SELECT * FROM dress WHERE dress_id = ${dressId}`, (err, res) => {
+    sql.query("SELECT * FROM dress WHERE dress_id=?", dressId, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
-            return;
         }
-        if (res.length) {
+        if (res.length === 1) {
             console.log("Dress found.");
             result(null, {dress: res[0]});
-            return;
+        } else {
+            console.log(`Dress with id ${dressId} not found.`);
+            result({kind: "not_found"}, null);
         }
-
-        console.log("Dress not found.");
-        result({kind: "not_found"}, null);
     });
 };
 
@@ -91,34 +101,32 @@ Dress.update = (dressId, dress, result) => {
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
-                result(null, err);
-                return;
+                result(err, null);
             }
             if (res.affectedRows === 0) {
-                console.log("Dress with id not found.");
+                console.log(`Dress with id ${dressId} not found.`);
                 result({kind: "not_found"}, null);
-                return;
+            } else {
+                console.log("Dress updated.");
+                result(null, {id: dressId, dress: dress});
             }
-            console.log("Dress updated.");
-            result(null, {id: dressId, dress: dress});
         });
 };
 
 /* delete row by id from dress */
 Dress.delete = (dressId, result) => {
-    sql.query(`DELETE FROM dress WHERE dress_id=${dressId}`, (err, res) => {
+    sql.query("DELETE FROM dress WHERE dress_id=?", dressId, (err, res) => {
         if (err) {
             console.log("error: ", err);
-            result(null, err);
-            return;
+            result(err, null);
         }
         if (res.affectedRows === 0) {
             console.log("Dress with id not found.");
             result({kind: "not_found"}, null);
-            return;
+        } else {
+            console.log("Dress removed.");
+            result(null, {message: `Dress with id ${dressId} removed.`});
         }
-        console.log("Dress removed.");
-        result(null, {id: dressId, response: res});
     })
 }
 

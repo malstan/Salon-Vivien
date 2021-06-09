@@ -48,4 +48,7 @@ REST API pomocou node.js
         -> update - upravi zaznam v tabulke dress
         -> delete - vymaze zaznam z tabulky dress
     -> /api/category/:category -> GET
+    -> /api/category/:category?offset=''&limit='' -> GET
         -> getByCategory - vrati vsetky zaznamy z tabulky dress zo zadanej kategorie
+    -> /api/imagesUpload -> POST
+        -> upload - prida nazvy fotiek do databazy a fotky ulozi do suboru ./public/figures/uploads
