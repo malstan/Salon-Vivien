@@ -9,8 +9,11 @@ exports.getAll = (req, res) => {
     Dress.getAll((err, data) => {
         if (err)
             res.status(500).send({message: err.message || "Some error occurred while retrieving dress."});
-        else
+        else {
+            data.dresses.map((dress) => dress.photo = dress.photo.split(","));
+            data.dresses.map((dress) => dress.photo.pop());
             res.send(data);
+        }
     });
 };
 
@@ -36,8 +39,11 @@ exports.create = (req, res) => {
                 res.status(507).send({message: `Dress with name ${req.body.name} already exists in database.`})
             else
                 res.status(500).send({message: err.message || "Some error occured while creating the Dress."});
-        else
+        else {
+            data.dress.photo = data.dress.photo.split(",");
+            data.dress.photo.pop();
             res.send(data);
+        }
     });
 };
 
@@ -63,8 +69,11 @@ exports.getByCategory = (req, res) => {
                 res.status(404).send({message: `Dresses with category id ${parameters.category} not found.`});
             else
                 res.status(500).send({message: `Error retrieving Dresses with category id ${parameters.category}.`});
-        } else
+        } else {
+            data.dresses.map((dress) => dress.photo = dress.photo.split(","));
+            data.dresses.map((dress) => dress.photo.pop());
             res.send(data);
+        }
     });
 };
 
@@ -82,8 +91,11 @@ exports.getById = (req, res) => {
                 res.status(404).send({message: `Dress with id ${dressId} not found.`});
             else
                 res.status(500).send({message: `Error retrieving Dress with id ${dressId}.`});
-        } else
+        } else {
+            data.dress.photo = data.dress.photo.split(",");
+            data.dress.photo.pop();
             res.send(data);
+        }
     });
 };
 
@@ -116,8 +128,11 @@ exports.update = (req, res) => {
                 res.status(404).send({message: `Dress with id ${dressId} not found.`});
             else
                 res.status(500).send({message: `Error updating Dress with id ${dressId}.`});
-        } else
+        } else {
+            data.dress.photo = data.dress.photo.split(",");
+            data.dress.photo.pop();
             res.send(data);
+        }
     });
 };
 
