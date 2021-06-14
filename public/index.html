@@ -7,6 +7,8 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="css/style.css" media="screen" rel="stylesheet">
+  <link href="css/card-style.css" media="screen" rel="stylesheet">
+  <link href="css/variables.css" media="screen" rel="stylesheet">
 </head>
 <body>
 
@@ -25,10 +27,12 @@
         <a class="nav-link" href="#home">Domov</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#dresses/wedding">Svadobné šaty</a>
+        <a class="nav-link" href="#dresses/wedding"
+           onclick="location.href = this.href + '/' + sessionStorage.pageW; return false;">Svadobné šaty</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#dresses/formal">Spoločenské šaty</a>
+        <a class="nav-link" href="#dresses/formal"
+           onclick="location.href = this.href + '/' + sessionStorage.pageF; return false;">Spoločenské šaty</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,6 +82,43 @@
         hamburger.classList.remove("active");
         navBar.classList.remove("show");
     }
+</script>
+
+<script>
+    let slideIndex = 1;
+
+    function openModal(id) {
+        document.getElementById('myModal-' + id).style.display = "block";
+        showSlides(slideIndex, id);
+    }
+    function closeModal(id) {
+        document.getElementById('myModal-' + id).style.display = "none";
+    }
+
+    function plusSlides(n, className) {
+        showSlides(slideIndex += n, className);
+    }
+
+    function showSlides(n, className) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides-" + className);
+        let dots = document.getElementsByClassName("demo");
+        //let captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        //captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+</script>
+
+<script>
 </script>
 
 <script src="js/index.js" type="module"></script>

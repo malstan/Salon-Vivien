@@ -1,4 +1,5 @@
-import {home, dresses, singleDress, contact, errorDisplay} from "../templates/templates.js";
+import {home, dresses, contact} from "../templates/templates.js";
+import {errorDresses} from "../templates/templates-error.js";
 import Mustache from "../mustache.js";
 
 export default [
@@ -10,12 +11,7 @@ export default [
     {
         hash: "dresses",
         target: "router-view",
-        getTemplate: renderDresses,
-    },
-    {
-        hash: "dress",
-        target: "router-view",
-        getTemplate: renderDress,
+        getTemplate: prepareForFetchDresses,
     },
     {
         hash: "contact",
@@ -24,16 +20,27 @@ export default [
     },
 ];
 
-function renderDresses(targetElm, category) {
-    if (category === "wedding")
-        fetchDresses(targetElm, 2);
-    else if (category === "formal")
-        fetchDresses(targetElm, 1);
+function prepareForFetchDresses(targetElm, category, currentPage) {
+    if (category === "wedding") {
+        if (!currentPage && !sessionStorage.pageW)
+            sessionStorage.pageW = 1;
+        else if (currentPage)
+            sessionStorage.pageW = currentPage;
+        fetchDresses(targetElm, 2, sessionStorage.pageW);
+    }
+    else if (category === "formal") {
+        if (!currentPage && !sessionStorage.pageF)
+            sessionStorage.pageF = 1;
+        else if (currentPage)
+            sessionStorage.pageF = currentPage;
+        fetchDresses(targetElm, 1, sessionStorage.pageF);
+    }
 }
 
-function fetchDresses(targetElm, category) {
-    const url = `http://localhost:3000/api/category/${category}`;
+function fetchDresses(targetElm, category, page) {
+    const url = `http://localhost:3000/api/category/${category}?limit=20&offset=${(page - 1) * 20}`;
     let dressList = [];
+    let total;
 
     fetch(url)
         .then(response => {
@@ -43,55 +50,47 @@ function fetchDresses(targetElm, category) {
                 return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}.`))
         })
         .then(responseJSON => {
-            dressList = responseJSON;
+            dressList = responseJSON.dresses;
+            total = Math.ceil(responseJSON.total / 20);
+            if (total < 1)
+                return Promise.reject(new Error("There are no dresses."));
             return Promise.resolve();
         })
         .then(() => {
-            dressList.dresses.map((value, index) => {
-                if((index+1)%4 === 0)
-                    value.newRow = true;
-            });
-            const data = {
-                dresses: dressList,
-                category: "",
-            };
-            if (category === 1) data.category = "Spoločenské";
-            else data.category = "Svadobné";
-
-            document.getElementById(targetElm).innerHTML =
-                Mustache.render(dresses(), data);
+            renderDresses(targetElm, dressList, category, page, total);
         })
-        .catch(error => {
-            const errorMessage = {error: error};
-            document.getElementById(targetElm).innerHTML = Mustache.render(errorDisplay(), errorMessage);
+        .catch((error) => {
+            console.log(error);
+            document.getElementById(targetElm).innerHTML = Mustache.render(errorDresses());
         });
 }
 
-function renderDress(targetElm, id) {
-    const url = `http://localhost:3000/api/dress/${id}`;
+function renderDresses(targetElm, dressList, category, current, total) {
+    current = parseInt(current);
 
-    let dress;
+    dressList.map((value, index) => {
+        if((index+1)%4 === 0)
+            value.newRow = true;
+    });
 
-    fetch(url)
-        .then((response) => {
-            if(response.ok)
-                return response.json();
-            else
-                return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}.`));
-        })
-        .then((responseJSON) => {
-            dress = responseJSON.dress;
-            return Promise.resolve();
-        })
-        .then(() => {
-            if (dress.category === 1) dress.category = "formal";
-            else dress.category = "wedding";
+    let pages = Array.from({length: total}, (x, i) => ({page: i+1, class: ""}));
+    pages[current-1].class = "active";
 
-            document.getElementById(targetElm).innerHTML =
-                Mustache.render(singleDress(), dress);
-        })
-        .catch(error => {
-            const errorMessage = {error: error};
-            document.getElementById(targetElm).innerHTML = Mustache.render(errorDisplay(), errorMessage);
-        });
+    const dataForRendering = {
+        pages: pages,
+        categorySK: "",
+        categoryEN: "",
+        dresses: dressList,
+    };
+
+    if (current > 1)
+        dataForRendering.prev = current - 1;
+    if (current < total)
+        dataForRendering.next = current + 1;
+
+    category === 1 ? dataForRendering.categorySK = "Spoločenské" : dataForRendering.categorySK = "Svadobné";
+    category === 1 ? dataForRendering.categoryEN = "formal" : dataForRendering.categoryEN = "wedding";
+
+    document.getElementById(targetElm).innerHTML =
+        Mustache.render(dresses(), dataForRendering);
 }

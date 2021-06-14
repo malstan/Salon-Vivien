@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
 
-:root {
-    --silverPink: #b69584;
-    --silverPinkDarker: #825d42;
-    --unbleachedSilk: #e2c3b2;
-    --linen: #EFE5DC;
-    --babyPowder: #FBFEFB;
-    --white: #FFFFFF;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -84,6 +75,36 @@ nav {
     opacity: 0.7;
     text-decoration: none;
     color:black;
+}
+
+.page-link {
+    color: var(--silverPinkDarker);
+    transition: all 0.4s ease-in-out;
+}
+
+.page-link:hover {
+    color: var(--silverPinkDarker);
+    background-color: var(--unbleachedSilk);
+}
+
+.page-item.active .page-link{
+    background-color: var(--silverPink);
+    border: var(--silverPinkDarker);
+}
+
+.error-link {
+    color: black;
+    padding: 1em;
+    background-color: var(--unbleachedSilk);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.4s ease-in-out;
+}
+
+.error-link:hover {
+    color: white;
+    background-color: var(--silverPink);
+    text-decoration: none;
 }
 
 @media only screen and (max-width: 991px) {
