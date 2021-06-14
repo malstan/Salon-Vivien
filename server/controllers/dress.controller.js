@@ -55,13 +55,8 @@ exports.getByCategory = (req, res) => {
         return;
     }
 
-    if (req.query.limit) {
-        parameters.limit = req.query.limit;
-        if (req.query.offset)
-            parameters.offset = req.query.offset;
-        else
-            parameters.offset = 0;
-    }
+    req.query.limit ? parameters.limit = req.query.limit : parameters.limit = 20;
+    req.query.offset ? parameters.offset = req.query.offset : parameters.offset = 0;
 
     Dress.getByCategory(parameters, (err, data) => {
         if (err) {
@@ -70,7 +65,10 @@ exports.getByCategory = (req, res) => {
             else
                 res.status(500).send({message: `Error retrieving Dresses with category id ${parameters.category}.`});
         } else {
-            data.dresses.map((dress) => dress.photo = dress.photo.split(","));
+            data.dresses.map((dress) => {
+                dress.photo = dress.photo.split(",");
+                dress.color = dress.color.split(", ");
+            });
             data.dresses.map((dress) => dress.photo.pop());
             res.send(data);
         }

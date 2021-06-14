@@ -45,26 +45,22 @@ Dress.create = (dress, result) => {
 
 /* get rows by category from dress */
 Dress.getByCategory = (params, result) => {
-    if (!isNaN(params.limit) && !isNaN(params.offset)) {
-        sql.query(`SELECT * FROM dress WHERE category=${params.category} LIMIT ${params.limit} OFFSET ${params.offset}`,
-            (err, res) => {
-                if (err)
-                    result(err, null);
-                else if (res.length === 0)
-                    result({kind: "not_found"}, null);
-                else
-                    result(null, {dresses: res});
-            });
-    } else {
-        sql.query("SELECT * FROM dress WHERE category=?", params.category, (err, res) => {
+    sql.query(`SELECT * FROM dress WHERE category=${params.category} LIMIT ${params.limit} OFFSET ${params.offset}`,
+        (err, res) => {
             if (err)
                 result(err, null);
             else if (res.length === 0)
                 result({kind: "not_found"}, null);
-            else
-                result(null, {dresses: res});
+            else {
+                sql.query(`SELECT count(*) AS dressCount FROM dress WHERE category=${params.category}`,
+                    (err, res2) => {
+                        if (err)
+                            result(err, null);
+                        else
+                            result(null, {dresses: res, total: res2[0].dressCount});
+                    });
+            }
         });
-    }
 };
 
 /* get one row by id from dress*/
