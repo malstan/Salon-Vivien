@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+  <link href="admin-css/login-style.css" media="screen" rel="stylesheet">
+</head>
+<body>
+<!-- Main Content -->
+<div class="container-fluid">
+  <div class="row main-content text-center">
+    <div class="col-md-4 text-center company__info">
+      <span class="company__logo"><img src="../figures/shop.jpg" alt="image"></span>
+      <h4 class="company_title">Salon Vivien</h4>
+    </div>
+    <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+      <div class="container-fluid">
+        <div class="row">
+          <h2 class="m-2">Log In</h2>
+        </div>
+        <div class="row">
+          <form class="form-group" id="loginForm">
+            <div class="row">
+              <input class="form__input" id="username" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="row">
+              <input class="form__input" id="password" name="password" placeholder="Password" type="password">
+            </div>
+            <div class="row">
+              <input class="btn" type="submit" value="Log in">
+            </div>
+          </form>
+          <div class="alert alert-danger" id="form-error" >
+            <strong>Pozor!</strong> Skontrolujte meno alebo heslo.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="admin-js/loginHandling.js"></script>
+</body>
+</html>
