@@ -56,14 +56,13 @@
               <div class="form-group">
                 <label for="category">Kategória</label>
                 <select class="form-control" id="category" required>
+                  <option value="none" selected disabled hidden></option>
                   <option value="1">Spoločenské</option>
                   <option value="2">Svadobné</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="photo">Fotky</label>
-                <input class="form-control" disabled id="photo" name="photo" type="text">
-                <br>
+                <label for="fileElm">Fotky</label>
                 <fieldset id="fieldFileUpload">
                   <input accept="image/jpeg, image/png, image/jpg" id="fileElm" multiple name="file" type="file"/>
                 </fieldset>

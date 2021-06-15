@@ -32,3 +32,12 @@ table {
 #newDressForm-error {
     visibility: hidden;
 }
+
+.form-control {
+    border-color: var(--unbleachedSilk);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem var(--unbleachedSilk);
+    border-color: var(--unbleachedSilk);
+}
