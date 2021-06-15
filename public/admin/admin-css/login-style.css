@@ -1,10 +1,4 @@
-:root {
-    --silverPink: #b69584;
-    --silverPinkDarker: #825d42;
-    --unbleachedSilk: #e2c3b2;
-    --linen: #EFE5DC;
-    --babyPowder: #FBFEFB;
-}
+@import '../../css/variables.css';
 
 .main-content {
     width: 60%;
@@ -17,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: var(--silverPinkDarker);
+    color: var(--silverPink);
 }
 
 img {width: 90%}
@@ -57,7 +51,7 @@ form {
     transition: all .5s ease;
     width: 70%;
     border-radius: 30px;
-    color: var(--unbleachedSilk);
+    color: var(--silverPink);
     font-weight: 600;
     background-color: #fff;
     border: 1px solid var(--unbleachedSilk);
