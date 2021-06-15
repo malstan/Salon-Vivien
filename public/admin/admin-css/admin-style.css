@@ -28,3 +28,7 @@ table {
 .hiddenElm {
     display: none;
 }
+
+#newDressForm-error {
+    visibility: hidden;
+}

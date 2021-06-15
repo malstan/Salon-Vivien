@@ -4,105 +4,97 @@
   <meta charset="UTF-8">
   <title>Admin</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" media="screen" href="admin-css/admin-style.css">
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+  <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" rel="stylesheet">
+  <link href="admin-css/admin-style.css" media="screen" rel="stylesheet">
 </head>
 <body>
 <header>
   <nav class="navbar navbar-light bg-light">
-    <h2>Salon-Vivien - admin</h2>
-    <a class="btn myButton" href="/admin/logout">Log out</a>
+    <h2>Salón-Vivien - admin</h2>
+    <a class="btn myButton" href="/admin/logout">Odhlásiť sa</a>
   </nav>
 </header>
 <main>
   <div class="container-fluid p-5">
-    <div class="row">
-      <div class="col-lg-8">
-        <div id="wedding"></div>
-        <div id="formal"></div>
-      </div>
-      <div class="col-lg-4 text-center">
-        <!-- Button trigger modal add dress-->
-        <button type="button" class="btn myButton" data-toggle="modal" data-target="#modalNewDress">
-          Nové šaty
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="modalNewDress" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Nové šaty</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+    <button class="btn myButton mb-4" data-target="#modalNewDress" data-toggle="modal" type="button">
+      Nové šaty
+    </button>
+    <div aria-hidden="true" class="modal fade bd-example-modal-lg" id="modalNewDress" role="dialog" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content text-center">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Nové šaty</h5>
+            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="newDressForm">
+              <div class="form-group">
+                <label for="name">Meno</label>
+                <input aria-describedby="meno" class="form-control" id="name" required type="text">
               </div>
-              <div class="modal-body">
-                <form id="newDressForm">
-                  <div class="form-group">
-                    <label for="name">Meno</label>
-                    <input type="text" class="form-control" id="name" aria-describedby="meno" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="size">Veľkosť</label>
-                    <input type="text" class="form-control" id="size">
-                  </div>
-                  <div class="form-group">
-                    <label for="color">Farba</label>
-                    <input type="text" class="form-control" id="color" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="description">Popis</label>
-                    <input type="text" class="form-control" id="description">
-                  </div>
-                  <div class="form-group">
-                    <label for="price">Cena</label>
-                    <input type="number" step="any" class="form-control" id="price" value="0">
-                  </div>
-                  <div class="form-group">
-                    <label for="category">Kategória</label>
-                    <select class="form-control" id="category" required>
-                      <option value="1">Spoločenské</option>
-                      <option value="2">Svadobné</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="photo">Photo:</label>
-                    <input class="form-control" type="text" name="photo" id="photo" disabled>
-                    <br>
-                    <fieldset id="fieldFileUpload">
-                      <input type="file" multiple id="fileElm" name="file" accept="image/jpeg, image/png, image/jpg"/>
-                      <button class="myButton btn" type="button" id="fileUpload">Poslať fotky</button>
-                    </fieldset>
-                  </div>
-                  <button type="submit" class="btn myButton">Pridať</button>
-                </form>
+              <div class="form-group">
+                <label for="size">Veľkosť</label>
+                <input class="form-control" id="size" type="text">
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušiť</button>
+              <div class="form-group">
+                <label for="color">Farba</label>
+                <input class="form-control" id="color" required type="text">
               </div>
+              <div class="form-group">
+                <label for="description">Popis</label>
+                <input class="form-control" id="description" type="text">
+              </div>
+              <div class="form-group">
+                <label for="price">Cena</label>
+                <input class="form-control" id="price" step="any" type="number" value="0">
+              </div>
+              <div class="form-group">
+                <label for="category">Kategória</label>
+                <select class="form-control" id="category" required>
+                  <option value="1">Spoločenské</option>
+                  <option value="2">Svadobné</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="photo">Fotky</label>
+                <input class="form-control" disabled id="photo" name="photo" type="text">
+                <br>
+                <fieldset id="fieldFileUpload">
+                  <input accept="image/jpeg, image/png, image/jpg" id="fileElm" multiple name="file" type="file"/>
+                </fieldset>
+              </div>
+              <button class="btn myButton" type="submit">Pridať</button>
+            </form>
+            <div class="alert alert-danger" id="newDressForm-error">
+              Zadajte potrebné údaje.
             </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-dismiss="modal" type="button">Zrušiť</button>
           </div>
         </div>
       </div>
     </div>
+
+    <div id="wedding"></div>
+    <div id="formal"></div>
   </div>
 </main>
 
 <div id="updateDress"></div>
 
-<div id="alertError" class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Uh Oh!</strong> <span id="alertErrorChild">Niekde nastala chyba.</span>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+<div class="alert alert-danger fade show" id="alertError" role="alert">
+  <strong>Uh Oh!</strong>
+  <span id="alertErrorChild">Niekde nastala chyba.</span>
 </div>
-<div id="alertSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Všetko v poriadku!</strong> <span id="alertSuccessChild">You should check in on some of those fields below.</span>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+<div class="alert alert-success fade show" id="alertSuccess" role="alert">
+  <strong>Všetko v poriadku!</strong>
+  <span id="alertSuccessChild">You should check in on some of those fields below.</span>
 </div>
 
 <script id="dresses-template" type="text/template">
@@ -128,7 +120,8 @@
       <td>{{size}}</td>
       <td>{{description}}</td>
       <td><i class="fas fa-trash-alt" style="color: red; cursor: pointer" onclick="deleteDress({{dress_id}})"></i></td>
-      <td><i class="fas fa-edit" style="color: skyblue; cursor: pointer" onclick="displayUpdateDress({{dress_id}})"></i></td>
+      <td><i class="fas fa-edit" style="color: skyblue; cursor: pointer" onclick="displayUpdateDress({{dress_id}})"></i>
+      </td>
     </tr>
     {{/data.dresses}}
     </tbody>
@@ -136,73 +129,79 @@
 </script>
 
 <script id="updateDress-template" type="text/template">
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="modalUpdateDress" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title">Upraviť šaty</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateDressForm">
-                        <div class="form-group">
-                          <label for="upid">Id</label>
-                          <input type="text" class="form-control" id="upid" aria-describedby="meno" value="{{dress_id}}" required disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="upname">Meno</label>
-                            <input type="text" class="form-control" id="upname" aria-describedby="meno" value="{{name}}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="upsize">Veľkosť</label>
-                            <input type="text" class="form-control" id="upsize" value="{{size}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="upcolor">Farba</label>
-                            <input type="text" class="form-control" id="upcolor" value="{{color}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="updescription">Popis</label>
-                            <input type="text" class="form-control" id="updescription" value="{{description}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="upprice">Cena</label>
-                            <input type="number" step="any" class="form-control" id="upprice" value="{{price}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="upcategory">Kategória</label>
-                            <select class="form-control" id="upcategory" required>
-                                <option value="1">Spoločenské</option>
-                                <option value="2">Svadobné</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="upphoto">Photo:</label>
-                          <input class="form-control" type="text" id="upphoto" value="{{photo}}" disabled>
-                          <br>
-                          <fieldset>
-                            <input type="file" multiple id="upfileElm" accept="image/jpeg, image/png, image/jpg"/>
-                            <button class="myButton btn" type="button" id="upfileUpload">Poslať fotky</button>
-                          </fieldset>
-                        </div>
-                        <button type="submit" class="btn myButton">Upraviť</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušiť</button>
-                </div>
-            </div>
+  <!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" id="modalUpdateDress" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content text-center">
+        <div class="modal-header">
+          <h5 class="modal-title">Upraviť šaty</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <form id="updateDressForm">
+            <div class="form-group">
+              <label for="upid">Id</label>
+              <input type="text" class="form-control" id="upid" aria-describedby="meno" value="{{dress_id}}" required
+                     disabled>
+            </div>
+            <div class="form-group">
+              <label for="upname">Meno</label>
+              <input type="text" class="form-control" id="upname" aria-describedby="meno" value="{{name}}" required>
+            </div>
+            <div class="form-group">
+              <label for="upsize">Veľkosť</label>
+              <input type="text" class="form-control" id="upsize" value="{{size}}">
+            </div>
+            <div class="form-group">
+              <label for="upcolor">Farba</label>
+              <input type="text" class="form-control" id="upcolor" value="{{color}}" required>
+            </div>
+            <div class="form-group">
+              <label for="updescription">Popis</label>
+              <input type="text" class="form-control" id="updescription" value="{{description}}">
+            </div>
+            <div class="form-group">
+              <label for="upprice">Cena</label>
+              <input type="number" step="any" class="form-control" id="upprice" value="{{price}}">
+            </div>
+            <div class="form-group">
+              <label for="upcategory">Kategória</label>
+              <select class="form-control" id="upcategory" required>
+                <option value="1">Spoločenské</option>
+                <option value="2">Svadobné</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="upphoto">Fotky</label>
+              <input class="form-control" type="text" id="upphoto" value="{{photo}}" disabled required>
+              <br>
+              <fieldset>
+                <input type="file" multiple id="upfileElm" accept="image/jpeg, image/png, image/jpg"/>
+              </fieldset>
+            </div>
+            <button type="submit" class="btn myButton">Upraviť</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušiť</button>
+        </div>
+      </div>
     </div>
+  </div>
 </script>
 
 <script src="admin-js/admin-index.js" type="module"></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

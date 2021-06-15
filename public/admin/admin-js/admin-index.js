@@ -2,13 +2,10 @@ import mustache from "../../js/mustache.js";
 
 const serverUrl = "http://localhost:3000";
 const newDressForm = document.getElementById("newDressForm");
-const updateDressForm = document.getElementById("updateDressForm");
-
 
 window.onload = () => {
     reloadDresses();
     newDressForm.onsubmit = addDress;
-    newDressForm.elements.namedItem("fileUpload").onclick = uploadImage(1);
 };
 
 window.deleteDress = deleteDress;
@@ -21,8 +18,16 @@ function displayDresses(category) {
         .then(response => {
             if (response.ok)
                 return response.json();
-            else
-                return Promise.reject();
+            else {
+                let message = "";
+                if (response.status === 404)
+                    message = `Šaty z kategórie ${category} sa nenašli.`;
+                else if (response.status === 500)
+                    message = `Nastala chyba pri vyberaní šiat kategórie ${category}.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
         })
         .then(dresses => {
             if (category === 1)
@@ -36,7 +41,7 @@ function displayDresses(category) {
                     {data: dresses, category: "Svadobné"}
                 );
         })
-        .catch(() => onError("Šaty sa nepodarilo načítať."));
+        .catch(error => onError(error));
 }
 
 function reloadDresses() {
@@ -44,13 +49,8 @@ function reloadDresses() {
     displayDresses(2);
 }
 
-function uploadImage(elm) {
-    let files;
-    if (elm === 1)
-        files = newDressForm.elements.namedItem("fileElm").files;
-    else
-        files = updateDressForm.elements.namedItem("upfileElm").files;
-
+async function uploadImage(fileArray) {
+    const files = fileArray;
     if (files.length > 0) {
         let images = new FormData();
 
@@ -61,25 +61,29 @@ function uploadImage(elm) {
             method: 'POST',
             body: images
         };
-        console.log("ti");
-        fetch(`${serverUrl}/api/imagesUpload`, postRequest)
+
+        let photoNames;
+        await fetch(`${serverUrl}/api/imagesUpload`, postRequest)
             .then(response => {
                 if (response.ok)
                     return response.json();
-                else
-                    return Promise.reject();
+                else {
+                    let message = "";
+                    if (response.status === 400)
+                        message = "Žiadne fotky sa nenašli.";
+                    else
+                        message = "Niekde nastala chyba...";
+                    return Promise.reject(message);
+                }
             })
-            .then(responseJSON => {
-                if (elm ===1)
-                    newDressForm.elements.namedItem("photo").value = responseJSON.imageNames;
-                else
-                    updateDressForm.elements.namedItem("upphoto").value = responseJSON.imageNames;
-            })
-            .catch(() => onError("Nepodarilo sa nahrať fotky."));
-    }
+            .then(responseJSON => photoNames = responseJSON.imageNames)
+            .catch(error => onError(error));
+        return photoNames;
+    } else
+        return null
 }
 
-function addDress(event) {
+async function addDress(event) {
     event.preventDefault();
 
     const name = newDressForm.elements.namedItem("name").value.trim();
@@ -88,10 +92,9 @@ function addDress(event) {
     const description = newDressForm.elements.namedItem("description").value.trim();
     const price = newDressForm.elements.namedItem("price").value.trim();
     const category = newDressForm.elements.namedItem("category").value;
-    const photo = newDressForm.elements.namedItem("photo").value;
-
-    if (name === "" || category === "") {
-        onError("Je nutné zadať potrebné údaje.");
+    const photo = await uploadImage(newDressForm.elements.namedItem("fileElm").files);
+    if (name === "" || category === "" || !photo) {
+        document.getElementById("newDressForm-error").style.visibility = "visible";
         return;
     }
 
@@ -117,12 +120,16 @@ function addDress(event) {
                 reloadDresses();
                 onSuccess("Šaty pridané.")
                 return Promise.resolve();
-            } else
-                return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}`));
+            } else {
+                let message = "";
+                if (response.status === 507)
+                    message = `Šaty už existujú.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
         })
-        .catch((error) => {
-            console.log(error);
-            onError("Šaty sa nepodarilo pridať.")});
+        .catch(error => onError(error));
 
     newDressForm.reset();
     $('#modalNewDress').modal('hide');
@@ -133,20 +140,28 @@ function deleteDress(dressId) {
         method: 'DELETE'
     };
 
-    const confirm = window.confirm("Naozaj chcete vymazať šaty s id " + dressId);
+    const confirm = window.confirm("Naozaj chcete vymazať šaty s id " + dressId + "?");
     if (!confirm)
         return;
 
     fetch(`${serverUrl}/api/dress/${dressId}`, deleteRequest)
         .then(response => {
             if (response.ok) {
-                onSuccess("Šaty vymazané.");
                 reloadDresses();
+                onSuccess("Šaty vymazané.");
                 return Promise.resolve();
-            } else
-                return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}.`));
+            } else {
+                let message = "";
+                if (response.status === 404)
+                    message = `Šaty s id ${dressId} sa nenašli.`;
+                else if (response.status === 500)
+                    message = `Nastala chyba pri vymazávaní šiat s id ${dressId}.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
         })
-        .catch(() => onError("Šaty sa nepodarilo vymazať."))
+        .catch(error => onError(error))
 }
 
 function displayUpdateDress(dressId) {
@@ -154,8 +169,16 @@ function displayUpdateDress(dressId) {
         .then(response => {
             if(response.ok)
                 return response.json();
-            else
-                return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}.`));
+            else {
+                let message = "";
+                if (response.status === 404)
+                    message = `Šaty s id ${dressId} sa nenašli.`;
+                else if (response.status === 500)
+                    message = `Nastala chyba pri vyberaní šiat s id ${dressId}.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
         })
         .then(responseJSON => {
             document.getElementById("updateDress").innerHTML = mustache.render(
@@ -165,13 +188,12 @@ function displayUpdateDress(dressId) {
 
             document.getElementById("upcategory").value = parseInt(responseJSON.dress.category);
             $('#modalUpdateDress').modal('show');
-            updateDressForm.elements.namedItem("upfileUpload").onclick = uploadImage(2);
             document.getElementById("updateDressForm").onsubmit = updateDress;
         })
-        .catch(() => this.onError("Šaty sa nepodarilo načítať."));
+        .catch(error => onError(error));
 }
 
-function updateDress(event) {
+async function updateDress(event) {
     event.preventDefault();
 
     const updateDressForm = document.getElementById("updateDressForm");
@@ -183,7 +205,13 @@ function updateDress(event) {
     const description = updateDressForm.elements.namedItem("updescription").value.trim();
     const price = updateDressForm.elements.namedItem("upprice").value.trim();
     const category = updateDressForm.elements.namedItem("upcategory").value;
-    const photo = "photo";
+
+    const photos = await uploadImage(updateDressForm.elements.namedItem("upfileElm").files);
+    let photo;
+    if(photos)
+        photo = updateDressForm.elements.namedItem("upphoto").value + "," + photos;
+    else
+        photo = updateDressForm.elements.namedItem("upphoto").value + ",";
 
     if (name === "" || category === "") {
         onError("Je nutné zadať potrebné údaje.");
@@ -214,10 +242,18 @@ function updateDress(event) {
                 reloadDresses();
                 onSuccess("Šaty upravené.");
                 return Promise.resolve();
-            } else
-                return Promise.reject(new Error(`Server answered with ${response.status}: ${response.statusText}`));
+            } else {
+                let message = "";
+                if (response.status === 404)
+                    message = `Šaty s id ${id} sa nenašli.`;
+                else if (response.status === 500)
+                    message = `Nastala chyba pri upravovaní šiat s id ${id}.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
         })
-        .catch(() => onError("Nepodarilo sa upraviť šaty s id " + id));
+        .catch(error => onError(error));
 
     $('#modalUpdateDress').modal('hide');
 }
@@ -225,9 +261,11 @@ function updateDress(event) {
 function onSuccess(message) {
     document.getElementById("alertSuccessChild").innerText = message;
     document.getElementById("alertSuccess").style.visibility = "visible";
+    setTimeout(() => document.getElementById("alertSuccess").style.visibility = "hidden", 2000);
 }
 
 function onError(message) {
     document.getElementById("alertErrorChild").innerText = message;
     document.getElementById("alertError").style.visibility = "visible";
+    setTimeout(() => document.getElementById("alertError").style.visibility = "hidden", 2000);
 }
