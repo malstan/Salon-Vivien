@@ -8,7 +8,7 @@ exports.upload = (req, res) => {
         res.status(400).send({message: "There are no files."});
     else {
         let names = "";
-        names = req.files.map((image) => names += image.originalname + ',');
+        req.files.map(file => names = names + file.originalname + ",");
         res.send({imageNames: names});
     }
 };

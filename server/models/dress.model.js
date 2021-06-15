@@ -45,7 +45,13 @@ Dress.create = (dress, result) => {
 
 /* get rows by category from dress */
 Dress.getByCategory = (params, result) => {
-    sql.query(`SELECT * FROM dress WHERE category=${params.category} LIMIT ${params.limit} OFFSET ${params.offset}`,
+    let query;
+    if (params.limit === 0 && params.offset === 0)
+        query = `SELECT * FROM dress WHERE category=${params.category}`;
+    else
+        query = `SELECT * FROM dress WHERE category=${params.category} LIMIT ${params.limit} OFFSET ${params.offset}`;
+
+    sql.query(query,
         (err, res) => {
             if (err)
                 result(err, null);

@@ -55,7 +55,7 @@ exports.getByCategory = (req, res) => {
         return;
     }
 
-    req.query.limit ? parameters.limit = req.query.limit : parameters.limit = 20;
+    req.query.limit ? parameters.limit = req.query.limit : parameters.limit = 0;
     req.query.offset ? parameters.offset = req.query.offset : parameters.offset = 0;
 
     Dress.getByCategory(parameters, (err, data) => {
@@ -67,7 +67,7 @@ exports.getByCategory = (req, res) => {
         } else {
             data.dresses.map((dress) => {
                 dress.photo = dress.photo.split(",");
-                dress.color = dress.color.split(", ");
+                if (dress.color) dress.color = dress.color.split(", ");
             });
             data.dresses.map((dress) => dress.photo.pop());
             res.send(data);
