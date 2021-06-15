@@ -27,7 +27,7 @@ export const dresses = () => {
                 
                 <img class="hover-shadow cursor" 
                 src="../../figures/uploads/{{photo.0}}" 
-                onclick="openModal('{{name}}')" 
+                onclick="handleModal('{{dress_id}}')"
                 alt="image">
 
               </header>
@@ -48,20 +48,37 @@ export const dresses = () => {
                 </p>
               </div>
             </article>
-            
-            <div id="myModal-{{name}}" class="modal">
-              <span class="close cursor" onclick="closeModal('{{name}}')">&times;</span>
-              <div class="modal-content">
-                  {{#photo}}
-                  <div class="mySlides mySlides-{{name}}">
-                    <img class="demo" src="../../figures/uploads/{{.}}" alt="image">
+            <div class="modal fade bd-example-modal-md" id="modal-{{dress_id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel-{{dress_id}}">{{name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  {{/photo}}
-                  <a class="prev" onclick="plusSlides(-1, '{{name}}')">&#10094;</a>
-                  <a class="next" onclick="plusSlides(1, '{{name}}')">&#10095;</a>
+                  <div class="modal-body">
+                  <div id="carouselControls-{{dress_id}}" class="carousel slide" data-interval="false" data-ride="carousel">
+                      <div class="carousel-inner" id="inner-{{dress_id}}">
+                        {{#photo}}
+                        <div class="carousel-item">
+                          <img class="d-block" src="../../figures/uploads/{{.}}" alt="First slide">
+                        </div>
+                        {{/photo}}
+                      </div>
+                      <a class="carousel-control-prev" href="#carouseControls-{{dress_id}}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href="#carouselControls-{{dress_id}}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            
           </div>
           
           {{#newRow}}

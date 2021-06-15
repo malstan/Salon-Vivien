@@ -5,7 +5,8 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>Salon-Vivien</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
   <link href="css/style.css" media="screen" rel="stylesheet">
   <link href="css/card-style.css" media="screen" rel="stylesheet">
   <link href="css/variables.css" media="screen" rel="stylesheet">
@@ -61,7 +62,6 @@
 </nav>
 
 <main id="router-view"></main>
-
 <footer class="text-center m-5">Copyright Salon-Vivien 2021</footer>
 
 <script>
@@ -85,45 +85,22 @@
 </script>
 
 <script>
-    let slideIndex = 1;
-
-    function openModal(id) {
-        document.getElementById('myModal-' + id).style.display = "block";
-        showSlides(slideIndex, id);
-    }
-    function closeModal(id) {
-        document.getElementById('myModal-' + id).style.display = "none";
-    }
-
-    function plusSlides(n, className) {
-        showSlides(slideIndex += n, className);
-    }
-
-    function showSlides(n, className) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides-" + className);
-        let dots = document.getElementsByClassName("demo");
-        //let captionText = document.getElementById("caption");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        //captionText.innerHTML = dots[slideIndex-1].alt;
-    }
-</script>
-
-<script>
+  function handleModal(index){
+      $('#modal-' + index)
+          .modal('show')
+          .on('hide.bs.modal', () => $('#inner-' + index).children().removeClass('active'));
+      $('#inner-' + index + ' :first-child').addClass('active');
+  }
 </script>
 
 <script src="js/index.js" type="module"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script></body>
 </html>

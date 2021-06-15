@@ -70,8 +70,6 @@
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s;
     transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
 }
 
@@ -159,8 +157,6 @@
     -webkit-transform: translateY(45px);
     transform: translateY(45px);
     -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-    transition: opacity 0.3s, -webkit-transform 0.3s;
-    transition: opacity 0.3s, transform 0.3s;
     transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
     -webkit-transition-delay: 0s;
     transition-delay: 0s;
@@ -194,49 +190,6 @@
     padding-left: 10px;
 }
 
-/**
- * lightbox
- */
-/* The Modal (background) */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 30;
-    left: 0;
-    top: 0;
-    padding-top: 58px;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.9);
-}
-
-/* Modal Content */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    height: 90vh;
-    width: 70%;
-}
-
-/* The Close Button */
-.close {
-    color: white;
-    position: absolute;
-    top: 70px;
-    right: 3%;
-    font-size: 35px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #999;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 /* Hide the slides by default */
 .mySlides {
     display: none;
@@ -265,6 +218,10 @@
     -webkit-user-select: none;
 }
 
+.prev {
+    left: 0;
+}
+
 /* Position the "next button" to the right */
 .next {
     right: 0;
@@ -284,14 +241,6 @@
     padding: 8px 12px;
     position: absolute;
     top: 0;
-}
-
-/* Caption text */
-.caption-container {
-    text-align: center;
-    background-color: black;
-    padding: 2px 16px;
-    color: white;
 }
 
 .active {
