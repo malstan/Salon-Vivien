@@ -4,6 +4,8 @@
 
 module.exports = app => {
     const sessions = require('express-session');
+    const crypto = require('crypto');
+    const adminConfig = require('../config/admin.config');
     let session;
 
     app.use(sessions({
@@ -24,7 +26,9 @@ module.exports = app => {
 
     app.post("/admin/login", (req, res) => {
         session = req.session;
-        if (req.body.username === 'admin' && req.body.password === 'admin') {
+        const username = crypto.createHmac('sha256', adminConfig.SECRET).update(req.body.username).digest('hex');
+        const password = crypto.createHmac('sha256', adminConfig.SECRET).update(req.body.password).digest('hex');
+        if (username === adminConfig.USER && password === adminConfig.PASSWORD) {
             session.uniqueId = req.body.username;
             res.redirect("/admin");
         } else {
