@@ -15,9 +15,9 @@ app.get('/', (req, res) =>
     res.sendFile(__dirname + "/public/index.html")
 );
 
-require("./server/routes/dress.routes")(app);
-require("./server/routes/image.routes")(app);
-require("./server/routes/admin.routes")(app);
+require("./server/nodejs/routes/dress.routes")(app);
+require("./server/nodejs/routes/image.routes")(app);
+require("./server/nodejs/routes/admin.routes")(app);
 
 app.all("*", (req, res) =>
     res.status(400).send({message: "Bad request!"})
