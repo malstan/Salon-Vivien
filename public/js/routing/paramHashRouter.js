@@ -2,18 +2,21 @@
  * class for extract hash and route
  */
 export default class ParamHashRouter {
-    constructor(routes, inithash) {
+    constructor(routes) {
         this.routes = routes;
 
         window.addEventListener("hashchange", event => this.doRouting(event));
 
-        window.location.hash = inithash;
-        this.doRouting(inithash);
+        if (window.location.hash === "")
+            window.location.hash = "#home";
+
+        this.doRouting();
     }
 
 
     doRouting() {
         let hash = window.location.hash;
+
         if (hash) {
             hash = hash[0] === '#' ? hash.substr(1) : hash;
             let hashParts = hash.split("/");
