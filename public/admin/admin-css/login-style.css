@@ -1,16 +1,17 @@
+/**
+ * Stanislav Malik
+ * 2021
+ * CSS for login page
+ */
 @import '../../css/variables.css';
 
 .main-content {
     width: 60%;
     margin: 5em auto;
-    display: flex;
 }
 
 .company__info {
     background-color: var(--linen);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     color: var(--silverPink);
 }
 
@@ -63,11 +64,11 @@ form {
     background-color: var(--unbleachedSilk);
     color: white;
 }
-
+/*
 #form-error {
     visibility: hidden;
 }
-
+*/
 @media screen and (max-width: 640px) {
     .main-content {
         width: 90%;

@@ -1,4 +1,19 @@
+/**
+ * Stanislav Malik
+ * 2021
+ * CSS for admin page
+ */
 @import '../../css/variables.css';
+
+a {
+    text-decoration: none;
+    color: var(--silverPink);
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--unbleachedSilk);
+}
 
 .myButton {
     background-color: #fff;
@@ -16,6 +31,10 @@
 
 table {
     text-align: center;
+}
+
+.move {
+    cursor: grab;
 }
 
 .alert {
@@ -40,4 +59,48 @@ table {
 .form-control:focus {
     box-shadow: 0 0 0 0.2rem var(--unbleachedSilk);
     border-color: var(--unbleachedSilk);
+}
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible-btn {
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.5em;
+    border-radius: 5px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active-colaps, .collapsible-btn:hover {
+    background-color: var(--unbleachedSilk);
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content-colaps {
+    padding: 0 18px;
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+
+}
+
+.collapsible-btn:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f067";
+    font-size: 1em;
+    color: #444;
+    float: right;
+    margin-left: 5px;
+}
+
+.active-colaps:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f068";
 }

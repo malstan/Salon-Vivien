@@ -1,6 +1,16 @@
+/**
+ * Stanislav Malik
+ * 2021
+ * handling login form
+ */
+
 const form = document.getElementById("loginForm");
 form.onsubmit = loginHandling;
 
+/**
+ * handle login form
+ * @param event
+ */
 function loginHandling (event) {
     event.preventDefault();
 
@@ -12,7 +22,7 @@ function loginHandling (event) {
         return;
     }
 
-    const url = "http://localhost:3000/admin/login";
+    const url = "http://localhost/salon-vivien/server/login/login.php";
 
     const postRequest = {
         headers: {

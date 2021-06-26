@@ -1,20 +1,35 @@
-import mustache from "../../js/mustache.js";
+/**
+ * Stanislav Malik
+ * 2021
+ * handling forms for CRUD operations
+ */
 
-const serverUrl = "http://localhost:3000";
+import mustache from "../../js/mustache.js";
+import Sortable from "./sortable.complete.esm.js";
+
+const serverUrl = "http://127.0.0.1/salon-vivien/salon-vivien/server/dress";
 const newDressForm = document.getElementById("newDressForm");
 
-window.onload = () => {
-    reloadDresses();
-    newDressForm.onsubmit = addDress;
-};
+reloadDresses();
+newDressForm.onsubmit = addDress;
+
+// variables for save actual ordering
+let weddingList = [];
+let formalList = [];
 
 window.deleteDress = deleteDress;
 window.displayUpdateDress = displayUpdateDress;
 window.updateDress = updateDress;
 window.uploadImage = uploadImage;
+window.reloadDresses = reloadDresses;
+window.processOrdering = processOrdering;
 
+/**
+ * display all dresses by category
+ * @param category - dress category
+ */
 function displayDresses(category) {
-    fetch(`${serverUrl}/api/category/${category}`)
+    fetch(`${serverUrl}/getByCategory.php?category=${category}`)
         .then(response => {
             if (response.ok)
                 return response.json();
@@ -26,36 +41,63 @@ function displayDresses(category) {
                     message = `Nastala chyba pri vyberaní šiat kategórie ${category}.`;
                 else
                     message = "Niekde nastala chyba...";
+
                 return Promise.reject(message);
             }
         })
-        .then(dresses => {
-            if (category === 1)
-                document.getElementById("formal").innerHTML = mustache.render(
-                    document.getElementById("dresses-template").innerHTML,
-                    {data: dresses, category: "Spoločenské"}
-                );
-            else if (category === 2)
-                document.getElementById("wedding").innerHTML = mustache.render(
-                    document.getElementById("dresses-template").innerHTML,
-                    {data: dresses, category: "Svadobné"}
-                );
+        .then(responseJSON => {
+            document.getElementById(`category-${category}`).innerHTML = mustache.render(
+                document.getElementById("dresses-template").innerHTML,
+                {data: responseJSON.dresses, category: category}
+            );
         })
         .catch(error => onError(error));
+
+    return true;
 }
 
+/**
+ * reload dresses
+ */
 function reloadDresses() {
     displayDresses(1);
     displayDresses(2);
+
+    /* TODO - this can not be like this */
+    setTimeout(() => {
+        new Sortable.create(
+            document.getElementById("js-draggable-list-2"),
+            {
+                handle: '.move',
+                animation: 150,
+            }
+        );
+
+        new Sortable.create(
+            document.getElementById("js-draggable-list-1"),
+            {
+                handle: '.move',
+                animation: 150,
+            }
+        );
+
+        formalList = createOrderedList(1);
+        weddingList = createOrderedList(2);
+    }, 1000);
 }
 
+/**
+ * uploading file
+ * @param fileArray
+ * @returns {Promise<null|*>}
+ */
 async function uploadImage(fileArray) {
     const files = fileArray;
     if (files.length > 0) {
         let images = new FormData();
 
-        for(const file of files)
-            images.append('images', file, file.name);
+        for (const file of files)
+            images.append('images[]', file, file.name);
 
         const postRequest = {
             method: 'POST',
@@ -63,7 +105,7 @@ async function uploadImage(fileArray) {
         };
 
         let photoNames;
-        await fetch(`${serverUrl}/api/imagesUpload`, postRequest)
+        await fetch(`${serverUrl}/uploadImage.php`, postRequest)
             .then(response => {
                 if (response.ok)
                     return response.json();
@@ -83,9 +125,14 @@ async function uploadImage(fileArray) {
         return null
 }
 
+/**
+ * add new dress
+ * @param event
+ * @returns {Promise<void>}
+ */
 async function addDress(event) {
     event.preventDefault();
-
+    // get variables
     const name = newDressForm.elements.namedItem("name").value.trim();
     const size = newDressForm.elements.namedItem("size").value.trim();
     const color = newDressForm.elements.namedItem("color").value.trim();
@@ -93,6 +140,7 @@ async function addDress(event) {
     const price = newDressForm.elements.namedItem("price").value.trim();
     const category = newDressForm.elements.namedItem("category").value;
     const photo = await uploadImage(newDressForm.elements.namedItem("fileElm").files);
+
     if (name === "" || category === "" || !photo) {
         document.getElementById("newDressForm-error").style.visibility = "visible";
         return;
@@ -114,7 +162,7 @@ async function addDress(event) {
         body: JSON.stringify(newDress),
     };
 
-    fetch(`${serverUrl}/api/dress`, postRequest)
+    fetch(`${serverUrl}/createDress.php`, postRequest)
         .then(response => {
             if (response.ok) {
                 reloadDresses();
@@ -135,6 +183,10 @@ async function addDress(event) {
     $('#modalNewDress').modal('hide');
 }
 
+/**
+ * delete dress by id
+ * @param dressId - id of dress
+ */
 function deleteDress(dressId) {
     const deleteRequest = {
         method: 'DELETE'
@@ -144,7 +196,7 @@ function deleteDress(dressId) {
     if (!confirm)
         return;
 
-    fetch(`${serverUrl}/api/dress/${dressId}`, deleteRequest)
+    fetch(`${serverUrl}/deleteDress.php?id=${dressId}`, deleteRequest)
         .then(response => {
             if (response.ok) {
                 reloadDresses();
@@ -164,10 +216,14 @@ function deleteDress(dressId) {
         .catch(error => onError(error))
 }
 
+/**
+ * display form for dress update in modal
+ * @param dressId - id of dress
+ */
 function displayUpdateDress(dressId) {
-    fetch(`${serverUrl}/api/dress/${dressId}`)
+    fetch(`${serverUrl}/getById.php?id=${dressId}`)
         .then(response => {
-            if(response.ok)
+            if (response.ok)
                 return response.json();
             else {
                 let message = "";
@@ -193,11 +249,17 @@ function displayUpdateDress(dressId) {
         .catch(error => onError(error));
 }
 
+/**
+ * update dress
+ * @param event
+ * @returns {Promise<void>}
+ */
 async function updateDress(event) {
     event.preventDefault();
 
     const updateDressForm = document.getElementById("updateDressForm");
 
+    // get variables
     const id = updateDressForm.elements.namedItem("upid").value.trim();
     const name = updateDressForm.elements.namedItem("upname").value.trim();
     const size = updateDressForm.elements.namedItem("upsize").value.trim();
@@ -208,10 +270,12 @@ async function updateDress(event) {
 
     const photos = await uploadImage(updateDressForm.elements.namedItem("upfileElm").files);
     let photo;
-    if(photos)
-        photo = updateDressForm.elements.namedItem("upphoto").value + "," + photos;
+
+    /* TODO - check , */
+    if (photos)
+        photo = updateDressForm.elements.namedItem("upphoto").value + photos;
     else
-        photo = updateDressForm.elements.namedItem("upphoto").value + ",";
+        photo = updateDressForm.elements.namedItem("upphoto").value;
 
     if (name === "" || category === "") {
         onError("Je nutné zadať potrebné údaje.");
@@ -236,7 +300,7 @@ async function updateDress(event) {
         body: JSON.stringify(updateDress),
     };
 
-    fetch(`${serverUrl}/api/dress/${id}`, putRequest)
+    fetch(`${serverUrl}/updateDress.php?id=${id}`, putRequest)
         .then(response => {
             if (response.ok) {
                 reloadDresses();
@@ -258,14 +322,85 @@ async function updateDress(event) {
     $('#modalUpdateDress').modal('hide');
 }
 
+/**
+ * show alert on success
+ * @param message - success message
+ */
 function onSuccess(message) {
     document.getElementById("alertSuccessChild").innerText = message;
     document.getElementById("alertSuccess").style.visibility = "visible";
     setTimeout(() => document.getElementById("alertSuccess").style.visibility = "hidden", 2000);
 }
 
+/**
+ * show alert on error
+ * @param message - error message
+ */
 function onError(message) {
     document.getElementById("alertErrorChild").innerText = message;
     document.getElementById("alertError").style.visibility = "visible";
     setTimeout(() => document.getElementById("alertError").style.visibility = "hidden", 2000);
+}
+
+/**
+ * pick only dresses with changed ordering and send request for update
+ * @param category - dress category
+ */
+function processOrdering(category) {
+    const list = createOrderedList(category);
+
+    let newList = [];
+
+    // get rid of unchanged dresses
+    list.map((item, index) => {
+        if (item.id !== weddingList[index].id)
+            newList.push({id: item.id, order: index + 1})
+    });
+
+    if(list.length === 0){
+        onError("Žiadna zmena na odoslanie.")
+        return;
+    }
+
+    const putRequest = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+        body: JSON.stringify(newList),
+    };
+
+    fetch(`${serverUrl}/updateOrdering.php`, putRequest)
+        .then(response => {
+            if (response.ok) {
+                reloadDresses();
+                onSuccess("Šaty usporiadané.");
+                return Promise.resolve();
+            } else {
+                let message = "";
+                if (response.status === 404)
+                    message = `Šaty sa nenašli.`;
+                else if (response.status === 500)
+                    message = `Nastala chyba pri usporiadavaní šiat.`;
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
+        })
+        .catch(error => onError(error));
+}
+
+/**
+ *
+ * @param category - dress category
+ * @returns {*[]} - array of dresses [{id}]
+ */
+function createOrderedList(category) {
+    const rawList = document.querySelectorAll(`.js-draggable-${category}`);
+    let list = [];
+    rawList.forEach(item => {
+        list.push({id: item.id});
+    });
+
+    return list;
 }
