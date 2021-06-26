@@ -1,3 +1,8 @@
+/**
+ * Stanislav Malik
+  * 2021
+  * colors for dresses
+ */
 :root {
     --silverPink: #b69584;
     --silverPinkDarker: #825d42;
@@ -38,4 +43,5 @@
     --Smoky-blue: #608299;
     --Orchid: #da70d6;
     --Midnight: #191970;
+    --Levander: #e6e6fa;
 }

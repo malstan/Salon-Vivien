@@ -1,11 +1,16 @@
+/**
+ * Stanislav Malik
+ * 2021
+ * CSS for cards where dresses are displayed
+ */
+
 @import './variables.css';
+
 /**
 * CARD
 **/
 
 .card {
-    /*-webkit-transform: translateX(-50%) translateY(-50%) translateZ(0);
-    transform: translateX(-50%) translateY(-50%) translateZ(0);*/
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -23,33 +28,16 @@
 }
 
 /**
-* DATE
+* EYE
 **/
 
-.card__date {
+.card__eye {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
-    padding-top: 10px;
-    background-color: coral;
-    border-radius: 50%;
-    color: #fff;
-    text-align: center;
-    font-weight: 700;
-    line-height: 13px;
+    top: 10px;
+    right: 10px;
+    color: var(--babyPowder);
+    z-index: 1;
 }
-
-.card__date__day {
-    font-size: 14px;
-}
-
-.card__date__month {
-    text-transform: uppercase;
-    font-size: 10px;
-}
-
 
 /**
 * THUMB
@@ -61,6 +49,7 @@
     background-color: transparent;
     -webkit-transition: height 0.5s;
     transition: height 0.5s;
+    justify-content: center;
 }
 
 .card__thumb img {
@@ -90,14 +79,14 @@
 
 .card__body {
     position: relative;
-    height: 140px;
-    padding: 20px;
+    height: 130px;
+    padding: 10px;
     -webkit-transition: height 0.5s;
     transition: height 0.5s;
 }
 
 .card:hover .card__body {
-    height: 300px;
+    height: 250px;
 }
 
 .card__sale {
@@ -113,6 +102,12 @@
     line-height: 25px;
 }
 
+.card__point {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+}
+
 .card__title {
     margin: 0;
     padding: 0 0 10px 0;
@@ -126,16 +121,16 @@
     margin: 0;
     padding: 0 0 10px 0;
     font-size: 19px;
-    color: var(--silverPinkDarker );
+    justify-items: center;
+    color: var(--silverPinkDarker);
 }
 
-.colors {
-    list-style-type: none;
+.colors > span {
+    display: block;
 }
 
-.colors > li > span {
+.color {
     display: inline-block;
-    margin-right: 10px;
     content: "";
     width: 13px;
     height: 13px;
@@ -145,12 +140,8 @@
 }
 
 .card__description {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 56px;
     margin: 0;
-    padding: 0;
+    padding-top: 2em;
     color: #666C74;
     line-height: 27px;
     opacity: 0;
@@ -186,7 +177,7 @@
     font-size: 18px;
 }
 
-.icon+.icon {
+.icon + .icon {
     padding-left: 10px;
 }
 
@@ -232,15 +223,6 @@
 .prev:hover,
 .next:hover {
     background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-    color: #f2f2f2;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
 }
 
 .active {

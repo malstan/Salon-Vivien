@@ -1,3 +1,7 @@
+/**
+ * Stanislav Malik
+ * 2021
+ */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
 @import './variables.css';
 
@@ -15,17 +19,30 @@ img {
     width: 100%;
 }
 
+/**
+ * NAVBAR
+ */
 nav {
     background-color: var(--babyPowder);
+}
+
+.navbar {
+    transition: all 0.5s ease-in-out;
 }
 
 .nav-link, .dropdown-item {
     font-size: 1.1em;
     color: var(--silverPink);
     transition: all 0.2s ease-in-out;
+    border-bottom: 1px solid transparent;
 }
 
 .nav-link:hover, .dropdown-item:hover {
+    color: var(--unbleachedSilk);
+    border-bottom: 1px solid var(--unbleachedSilk);
+}
+
+.nav-link:focus, .dropdown-item:focus {
     color: var(--unbleachedSilk);
     border-bottom: 1px solid var(--unbleachedSilk);
 }
@@ -39,6 +56,7 @@ nav {
     outline: none;
 }
 
+/* hamburger */
 .hamburger {
     display: none;
 }
@@ -57,8 +75,16 @@ nav {
     margin-bottom: 0;
 }
 
-#router-view {
-    margin-top: 58px;
+/**
+ *
+ */
+
+#home {
+    background-image: url('../figures/MARMARA2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
 }
 
 #home, #home > div {
@@ -66,36 +92,28 @@ nav {
     color: var(--silverPinkDarker);
 }
 
-.dress-link {
-    text-decoration: none;
-    color: black;
-    transition: all 0.3s ease-in-out;
-}
-
-.dress-link:hover {
-    opacity: 0.7;
-    text-decoration: none;
-    color:black;
-}
-
+/* pagination */
 .page-link {
     color: var(--silverPinkDarker);
     transition: all 0.4s ease-in-out;
 }
 
-.page-link:hover {
+.page-link:hover, .page-link:focus {
     color: var(--silverPinkDarker);
     background-color: var(--unbleachedSilk);
+    box-shadow: none;
 }
 
-.page-item.active .page-link{
+.page-item.active .page-link {
     background-color: var(--silverPink);
     border: var(--silverPinkDarker);
 }
 
+/* error */
 .error-link {
+    cursor: pointer;
     color: black;
-    padding: 1em;
+    padding: 0.75em;
     background-color: var(--unbleachedSilk);
     border-radius: 8px;
     text-decoration: none;
@@ -108,11 +126,101 @@ nav {
     text-decoration: none;
 }
 
-@media only screen and (max-width: 991px) {
-    #mmm {
-        position: relative;
-    }
+.contact {
+    font-size: large;
+}
 
+.myTitle {
+    margin: 2em;
+}
+
+.myButton {
+    border: none;
+    color: white;
+    box-shadow: none;
+}
+
+.myButton:hover, .myButton:focus {
+    box-shadow: none;
+    color: white;
+}
+
+.table-contact {
+    width: 70%;
+    margin: auto;
+}
+
+/**
+ * FONTAWESOME ICONS ANIMATION
+ */
+#cog {
+    animation: cog-animation 5s linear infinite;
+}
+
+@keyframes cog-animation {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(359deg)
+    }
+}
+
+#wrench {
+    animation: wrench-animation 5s linear infinite;
+    transform-origin: top right;
+    position: absolute;
+    margin-left: -65px;
+    margin-top: 10px;
+    color: grey;
+    z-index: 10;
+}
+
+@keyframes wrench-animation {
+    0% {
+        transform: rotate(0deg)
+    }
+    50% {
+        transform: rotate(-60deg)
+    }
+    100% {
+        transform: rotate(0deg)
+    }
+}
+
+#hammer {
+    animation: hammer-animation 2s linear infinite;
+    transform-origin: bottom left;
+    position: absolute;
+    margin-left: -65px;
+    color: saddlebrown;
+}
+
+@keyframes hammer-animation {
+    0% {
+        transform: rotate(-40deg)
+    }
+    50% {
+        transform: rotate(3deg)
+    }
+    100% {
+        transform: rotate(-40deg)
+    }
+}
+
+/**
+ * <768px
+ */
+@media only screen and (max-width: 768px) {
+    .myTitle {
+        margin: 1.5em;
+    }
+}
+
+/**
+ * <991px
+ */
+@media only screen and (max-width: 991px) {
     #router-view {
         margin: 0;
     }
