@@ -6,13 +6,27 @@
  */
 
 header('Access-Control-Allow-Origin: http://salon-vivien.sk', false);
-include ('../config/database.php');
+include('../config/database.php');
 
+// check method
+if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
+    http_response_code(400);
+    echo json_encode(array("message" => "Request is not a PUT."));
+    return;
+}
+
+// get and check body
+$data = json_decode(file_get_contents('php://input'));
+
+if (!isset($data)) {
+    http_response_code(400);
+    echo json_encode(array("message" => "Content must have specific structure."));
+    return;
+}
+
+// create, prepare query
 $database = new Database();
 $connection = $database->getConnection();
-
-// get data for change
-$data = json_decode(file_get_contents('php://input'));
 
 foreach ($data as $item) {
     $query = "UPDATE dress SET ordering = :order WHERE id_dress = :id";
@@ -21,6 +35,7 @@ foreach ($data as $item) {
     $stmt->bindParam(":order", $item->order);
     $stmt->bindParam(":id", $item->id);
 
+    // execute
     try {
         $stmt->execute();
     } catch (PDOException $exception) {
@@ -30,4 +45,6 @@ foreach ($data as $item) {
     }
 }
 
+// success
 http_response_code(200);
+echo json_encode(array("message" => "Ordering updated."));
