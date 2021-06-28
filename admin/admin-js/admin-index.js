@@ -2,12 +2,14 @@
  * Stanislav Malik
  * 2021
  * handling forms for CRUD operations
+ * category 1 - formal dresses
+ *          2 - wedding dresses
  */
 
-import mustache from "../../js/mustache.js";
+import mustache from "../../public/js/mustache.js";
 import Sortable from "./sortable.complete.esm.js";
 
-const serverUrl = "http://127.0.0.1/salon-vivien/salon-vivien/server/dress";
+const serverUrl = "http://127.0.0.1/salon-vivien/server/php/dress";
 const newDressForm = document.getElementById("newDressForm");
 
 reloadDresses();
@@ -22,68 +24,64 @@ window.displayUpdateDress = displayUpdateDress;
 window.updateDress = updateDress;
 window.uploadImage = uploadImage;
 window.reloadDresses = reloadDresses;
-window.processOrdering = processOrdering;
+window.prepareForUpdateOrdering = prepareForUpdateOrdering;
 
 /**
  * display all dresses by category
  * @param category - dress category
  */
-function displayDresses(category) {
-    fetch(`${serverUrl}/getByCategory.php?category=${category}`)
+async function displayDresses(category) {
+    // get dresses by category
+    await fetch(`${serverUrl}/getByCategory.php?category=${category}`)
         .then(response => {
             if (response.ok)
                 return response.json();
             else {
-                let message = "";
                 if (response.status === 404)
-                    message = `Šaty z kategórie ${category} sa nenašli.`;
+                    return Promise.reject(`Šaty z kategórie ${category} sa nenašli.`);
                 else if (response.status === 500)
-                    message = `Nastala chyba pri vyberaní šiat kategórie ${category}.`;
+                    return Promise.reject(`Nastala chyba pri vyberaní šiat kategórie ${category}.`);
                 else
-                    message = "Niekde nastala chyba...";
-
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
         .then(responseJSON => {
+            // display dresses
             document.getElementById(`category-${category}`).innerHTML = mustache.render(
                 document.getElementById("dresses-template").innerHTML,
                 {data: responseJSON.dresses, category: category}
             );
         })
         .catch(error => onError(error));
-
-    return true;
 }
 
 /**
  * reload dresses
+ * create drag and drop
+ *
  */
-function reloadDresses() {
-    displayDresses(1);
-    displayDresses(2);
+async function reloadDresses() {
+    await displayDresses(1);
+    await displayDresses(2);
 
-    /* TODO - this can not be like this */
-    setTimeout(() => {
-        new Sortable.create(
-            document.getElementById("js-draggable-list-2"),
-            {
-                handle: '.move',
-                animation: 150,
-            }
-        );
+    // create handling for drag and drop
+    new Sortable.create(
+        document.getElementById("js-draggable-list-2"),
+        {
+            handle: '.move',
+            animation: 150,
+        }
+    );
+    new Sortable.create(
+        document.getElementById("js-draggable-list-1"),
+        {
+            handle: '.move',
+            animation: 150,
+        }
+    );
 
-        new Sortable.create(
-            document.getElementById("js-draggable-list-1"),
-            {
-                handle: '.move',
-                animation: 150,
-            }
-        );
-
-        formalList = createOrderedList(1);
-        weddingList = createOrderedList(2);
-    }, 1000);
+    formalList = createOrderedList(1);
+    weddingList = createOrderedList(2);
 }
 
 /**
@@ -93,36 +91,39 @@ function reloadDresses() {
  */
 async function uploadImage(fileArray) {
     const files = fileArray;
-    if (files.length > 0) {
-        let images = new FormData();
+    if (files.length === 0)
+        return null;
 
-        for (const file of files)
-            images.append('images[]', file, file.name);
+    // get images
+    let images = new FormData();
 
-        const postRequest = {
-            method: 'POST',
-            body: images
-        };
+    for (const file of files)
+        images.append('images[]', file, file.name);
 
-        let photoNames;
-        await fetch(`${serverUrl}/uploadImage.php`, postRequest)
-            .then(response => {
-                if (response.ok)
-                    return response.json();
-                else {
-                    let message = "";
-                    if (response.status === 400)
-                        message = "Žiadne fotky sa nenašli.";
-                    else
-                        message = "Niekde nastala chyba...";
-                    return Promise.reject(message);
-                }
-            })
-            .then(responseJSON => photoNames = responseJSON.imageNames)
-            .catch(error => onError(error));
-        return photoNames;
-    } else
-        return null
+    const postRequest = {
+        method: 'POST',
+        body: images
+    };
+
+    let photoNames;
+
+    // send request to upload images
+    await fetch(`${serverUrl}/uploadImage.php`, postRequest)
+        .then(response => {
+            if (response.ok)
+                return response.json();
+            else {
+                let message = "";
+                if (response.status === 400)
+                    message = "Žiadne fotky sa nenašli.";
+                else
+                    message = "Niekde nastala chyba...";
+                return Promise.reject(message);
+            }
+        })
+        .then(responseJSON => photoNames = responseJSON.imageNames)
+        .catch(error => onError(error));
+    return photoNames;
 }
 
 /**
@@ -132,15 +133,17 @@ async function uploadImage(fileArray) {
  */
 async function addDress(event) {
     event.preventDefault();
+
     // get variables
     const name = newDressForm.elements.namedItem("name").value.trim();
     const size = newDressForm.elements.namedItem("size").value.trim();
     const color = newDressForm.elements.namedItem("color").value.trim();
     const description = newDressForm.elements.namedItem("description").value.trim();
-    const price = newDressForm.elements.namedItem("price").value.trim();
+    const price = newDressForm.elements.namedItem("price").value;
     const category = newDressForm.elements.namedItem("category").value;
     const photo = await uploadImage(newDressForm.elements.namedItem("fileElm").files);
 
+    // check
     if (name === "" || category === "" || !photo) {
         document.getElementById("newDressForm-error").style.visibility = "visible";
         return;
@@ -162,6 +165,7 @@ async function addDress(event) {
         body: JSON.stringify(newDress),
     };
 
+    // create dress
     fetch(`${serverUrl}/createDress.php`, postRequest)
         .then(response => {
             if (response.ok) {
@@ -169,17 +173,17 @@ async function addDress(event) {
                 onSuccess("Šaty pridané.")
                 return Promise.resolve();
             } else {
-                let message = "";
                 if (response.status === 507)
-                    message = `Šaty už existujú.`;
+                    return Promise.reject(`Šaty už existujú.`);
                 else
-                    message = "Niekde nastala chyba...";
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
         .catch(error => onError(error));
 
     newDressForm.reset();
+
+    // hide modal with form to create dress
     $('#modalNewDress').modal('hide');
 }
 
@@ -187,33 +191,44 @@ async function addDress(event) {
  * delete dress by id
  * @param dressId - id of dress
  */
-function deleteDress(dressId) {
+function deleteDress(dressId, category) {
+    // prepare array of data to update ordering
+    let list = createOrderedList(category);
+    const indexToDel = list.indexOf(dressId.toString());
+
+    const toUpdate = [];
+    list.map((item, index) => {
+        if (index > indexToDel)
+            toUpdate.push({id: item, order: index})
+    });
+
+    // check
+    if (!window.confirm("Naozaj chcete vymazať šaty s id " + dressId + "?"))
+        return;
+
     const deleteRequest = {
         method: 'DELETE'
     };
 
-    const confirm = window.confirm("Naozaj chcete vymazať šaty s id " + dressId + "?");
-    if (!confirm)
-        return;
-
+    // delete dress
     fetch(`${serverUrl}/deleteDress.php?id=${dressId}`, deleteRequest)
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
-                reloadDresses();
+                await reloadDresses();
                 onSuccess("Šaty vymazané.");
                 return Promise.resolve();
             } else {
-                let message = "";
                 if (response.status === 404)
-                    message = `Šaty s id ${dressId} sa nenašli.`;
+                    return Promise.reject(`Šaty s id ${dressId} sa nenašli.`);
                 else if (response.status === 500)
-                    message = `Nastala chyba pri vymazávaní šiat s id ${dressId}.`;
+                    return Promise.reject(`Nastala chyba pri vymazávaní šiat s id ${dressId}.`);
                 else
-                    message = "Niekde nastala chyba...";
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
-        .catch(error => onError(error))
+        // update ordering
+        .then(() => processOrdering(toUpdate))
+        .catch(error => onError(error));
 }
 
 /**
@@ -221,29 +236,34 @@ function deleteDress(dressId) {
  * @param dressId - id of dress
  */
 function displayUpdateDress(dressId) {
+    // get one dress by id
     fetch(`${serverUrl}/getById.php?id=${dressId}`)
         .then(response => {
             if (response.ok)
                 return response.json();
             else {
-                let message = "";
                 if (response.status === 404)
-                    message = `Šaty s id ${dressId} sa nenašli.`;
+                    return Promise.reject(`Šaty s id ${dressId} sa nenašli.`);
                 else if (response.status === 500)
-                    message = `Nastala chyba pri vyberaní šiat s id ${dressId}.`;
+                    return Promise.reject(`Nastala chyba pri vyberaní šiat s id ${dressId}.`);
                 else
-                    message = "Niekde nastala chyba...";
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
         .then(responseJSON => {
+            // fill form with data
             document.getElementById("updateDress").innerHTML = mustache.render(
                 document.getElementById("updateDress-template").innerHTML,
                 responseJSON.dress
             );
 
+            // fill category in form
             document.getElementById("upcategory").value = parseInt(responseJSON.dress.category);
-            $('#modalUpdateDress').modal('show');
+
+            // show modal with form for update dress
+            const modal = new bootstrap.Modal(document.querySelector("#modalUpdateDress"));
+            modal.show();
+
             document.getElementById("updateDressForm").onsubmit = updateDress;
         })
         .catch(error => onError(error));
@@ -265,18 +285,20 @@ async function updateDress(event) {
     const size = updateDressForm.elements.namedItem("upsize").value.trim();
     const color = updateDressForm.elements.namedItem("upcolor").value.trim();
     const description = updateDressForm.elements.namedItem("updescription").value.trim();
-    const price = updateDressForm.elements.namedItem("upprice").value.trim();
+    const price = updateDressForm.elements.namedItem("upprice").value;
     const category = updateDressForm.elements.namedItem("upcategory").value;
 
+    // upload images
+    // response is names of images
     const photos = await uploadImage(updateDressForm.elements.namedItem("upfileElm").files);
     let photo;
 
-    /* TODO - check , */
     if (photos)
         photo = updateDressForm.elements.namedItem("upphoto").value + photos;
     else
         photo = updateDressForm.elements.namedItem("upphoto").value;
 
+    // check
     if (name === "" || category === "") {
         onError("Je nutné zadať potrebné údaje.");
         return;
@@ -300,6 +322,7 @@ async function updateDress(event) {
         body: JSON.stringify(updateDress),
     };
 
+    // update dress
     fetch(`${serverUrl}/updateDress.php?id=${id}`, putRequest)
         .then(response => {
             if (response.ok) {
@@ -307,18 +330,16 @@ async function updateDress(event) {
                 onSuccess("Šaty upravené.");
                 return Promise.resolve();
             } else {
-                let message = "";
                 if (response.status === 404)
-                    message = `Šaty s id ${id} sa nenašli.`;
+                    return Promise.reject(`Šaty s id ${id} sa nenašli.`);
                 else if (response.status === 500)
-                    message = `Nastala chyba pri upravovaní šiat s id ${id}.`;
+                    return Promise.reject(`Nastala chyba pri upravovaní šiat s id ${id}.`);
                 else
-                    message = "Niekde nastala chyba...";
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
         .catch(error => onError(error));
-
+    // hide modal with form
     $('#modalUpdateDress').modal('hide');
 }
 
@@ -329,7 +350,7 @@ async function updateDress(event) {
 function onSuccess(message) {
     document.getElementById("alertSuccessChild").innerText = message;
     document.getElementById("alertSuccess").style.visibility = "visible";
-    setTimeout(() => document.getElementById("alertSuccess").style.visibility = "hidden", 2000);
+    setTimeout(() => document.getElementById("alertSuccess").style.visibility = "hidden", 3000);
 }
 
 /**
@@ -339,26 +360,17 @@ function onSuccess(message) {
 function onError(message) {
     document.getElementById("alertErrorChild").innerText = message;
     document.getElementById("alertError").style.visibility = "visible";
-    setTimeout(() => document.getElementById("alertError").style.visibility = "hidden", 2000);
+    setTimeout(() => document.getElementById("alertError").style.visibility = "hidden", 3000);
 }
 
 /**
  * pick only dresses with changed ordering and send request for update
- * @param category - dress category
+ * @param toUpdate - array of data for update
  */
-function processOrdering(category) {
-    const list = createOrderedList(category);
-
-    let newList = [];
-
-    // get rid of unchanged dresses
-    list.map((item, index) => {
-        if (item.id !== weddingList[index].id)
-            newList.push({id: item.id, order: index + 1})
-    });
-
-    if(list.length === 0){
-        onError("Žiadna zmena na odoslanie.")
+function processOrdering(toUpdate) {
+    // check
+    if (toUpdate.length === 0) {
+        onError("Žiadna zmena na odoslanie.");
         return;
     }
 
@@ -367,27 +379,46 @@ function processOrdering(category) {
             'Content-Type': 'application/json',
         },
         method: 'PUT',
-        body: JSON.stringify(newList),
+        body: JSON.stringify(toUpdate),
     };
 
+    // update ordering
     fetch(`${serverUrl}/updateOrdering.php`, putRequest)
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
-                reloadDresses();
+                await reloadDresses();
                 onSuccess("Šaty usporiadané.");
                 return Promise.resolve();
             } else {
-                let message = "";
                 if (response.status === 404)
-                    message = `Šaty sa nenašli.`;
+                    return Promise.reject(`Šaty sa nenašli.`);
                 else if (response.status === 500)
-                    message = `Nastala chyba pri usporiadavaní šiat.`;
+                    return Promise.reject(`Nastala chyba pri usporiadavaní šiat.`);
                 else
-                    message = "Niekde nastala chyba...";
-                return Promise.reject(message);
+                    return Promise.reject("Niekde nastala chyba...");
             }
         })
         .catch(error => onError(error));
+}
+
+/**
+ * prepare list of data for update
+ * @param category - dress category
+ */
+function prepareForUpdateOrdering(category) {
+    const newList = createOrderedList(category);
+    let oldList
+    category === 1 ? oldList = formalList : oldList = weddingList;
+
+    let toUpdate = [];
+
+    // get rid of unchanged dresses
+    newList.map((item, index) => {
+        if (item !== oldList[index])
+            toUpdate.push({id: item, order: index + 1})
+    });
+
+    processOrdering(toUpdate);
 }
 
 /**
@@ -398,8 +429,9 @@ function processOrdering(category) {
 function createOrderedList(category) {
     const rawList = document.querySelectorAll(`.js-draggable-${category}`);
     let list = [];
+
     rawList.forEach(item => {
-        list.push({id: item.id});
+        list.push(item.id);
     });
 
     return list;

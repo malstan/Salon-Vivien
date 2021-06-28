@@ -3,7 +3,7 @@
  * 2021
  * CSS for login page
  */
-@import '../../css/variables.css';
+@import '../../public/css/variables.css';
 
 .main-content {
     width: 60%;

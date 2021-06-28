@@ -13,15 +13,15 @@
 </head>
 <body>
 <?php
-session_start();
-if (!isset($_SESSION['auth']))
-    header("location: login.php");
+    session_start();
+    if (!isset($_SESSION['auth']))
+        header("location: login.php");
 
-if (time() - $_SESSION['time-stamp'] > 60 * 60) {
-    session_unset();
-    session_destroy();
-    header("location: login.php");
-}
+    if (time() - $_SESSION['time-stamp'] > 60 * 60) {
+        session_unset();
+        session_destroy();
+        header("location: login.php");
+    }
 ?>
 <!-- HEADER -->
 <header>
@@ -98,7 +98,7 @@ if (time() - $_SESSION['time-stamp'] > 60 * 60) {
         <div class="content-colaps">
             <div class="mt-3 justify-content-end">
                 <button class="myButton btn" onclick="reloadDresses()">Zrušiť</button>
-                <button class="myButton btn" onclick="processOrdering(2)">Uložiť</button>
+                <button class="myButton btn" onclick="prepareForUpdateOrdering(2)">Uložiť</button>
             </div>
             <div id="category-2" class="table-responsive"></div>
         </div>
@@ -107,7 +107,7 @@ if (time() - $_SESSION['time-stamp'] > 60 * 60) {
         <div class="content-colaps">
             <div class="mt-3 justify-content-end">
                 <button class="myButton btn" onclick="reloadDresses()">Zrušiť</button>
-                <button class="myButton btn" onclick="processOrdering(1)">Uložiť</button>
+                <button class="myButton btn" onclick="prepareForUpdateOrdering(1)">Uložiť</button>
             </div>
             <div id="category-1" class="table-responsive"></div>
         </div>
@@ -153,7 +153,7 @@ if (time() - $_SESSION['time-stamp'] > 60 * 60) {
             <td>{{price}}</td>
             <td>{{size}}</td>
             <td>{{description}}</td>
-            <td><i class="fas fa-trash-alt" style="color: red; cursor: pointer" onclick="deleteDress({{id_dress}})"></i>
+            <td><i class="fas fa-trash-alt" style="color: red; cursor: pointer" onclick="deleteDress({{id_dress}}, {{category}})"></i>
             </td>
             <td><i class="fas fa-edit" style="color: skyblue; cursor: pointer"
                    onclick="displayUpdateDress({{id_dress}})"></i>
@@ -228,12 +228,14 @@ if (time() - $_SESSION['time-stamp'] > 60 * 60) {
 </script>
 
 <script>
+    // show/hide table with dresses
     const collapse = document.querySelectorAll(".collapsible-btn");
 
     for (let elm of collapse) {
         elm.addEventListener("click", () => {
             elm.classList.toggle("active-colaps");
             const content = elm.nextElementSibling;
+
             content.style.display === "block" ? content.style.display = "none" : content.style.display = "block";
             content.style.maxHeight ? content.style.maxHeight = null : content.style.maxHeight = content.scrollHeight + "px";
         });

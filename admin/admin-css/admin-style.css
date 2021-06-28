@@ -3,7 +3,7 @@
  * 2021
  * CSS for admin page
  */
-@import '../../css/variables.css';
+@import '../../public/css/variables.css';
 
 a {
     text-decoration: none;

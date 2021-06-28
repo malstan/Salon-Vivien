@@ -2,7 +2,10 @@
  * Stanislav Malik
  * 2021
  * handling login form
+ * only with node.js
  */
+
+const url = "http://localhost/salon-vivien/server/nodejs";
 
 const form = document.getElementById("loginForm");
 form.onsubmit = loginHandling;
@@ -22,8 +25,6 @@ function loginHandling (event) {
         return;
     }
 
-    const url = "http://localhost/salon-vivien/server/login/login.php";
-
     const postRequest = {
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ function loginHandling (event) {
         body: JSON.stringify({username: username, password: password}),
     };
 
-    fetch(url, postRequest)
+    fetch(`${url}/admin/login`, postRequest)
         .then(response => {
             if (response.ok) {
                 window.location.href = response.url;
