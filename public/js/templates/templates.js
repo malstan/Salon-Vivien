@@ -188,10 +188,10 @@ export const contact = () => {
                 </table>
     <!-- social media links -->
                 <div>
-                  <a class="btn myButton" style="background-color: #3b5998;" href="https://www.facebook.com/SalonVivienSabinov" role="button">
+                  <a class="btn myButton px-3 py-2 me-3" style="background-color: #3b5998;" href="https://www.facebook.com/SalonVivienSabinov" role="button">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn myButton" style="background-color: #ac2bac;" href="https://instagram.com/svadobnysalonvivien?utm_medium=copy_link" role="button">
+                  <a class="btn myButton px-3 py-2" style="background-color: #ac2bac;" href="https://instagram.com/svadobnysalonvivien" role="button">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>

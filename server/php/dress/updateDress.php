@@ -29,7 +29,7 @@ $data = json_decode(file_get_contents('php://input'));
 if (!isset($data->name) || !isset($data->size) || !isset($data->color) ||
     !isset($data->price) || !isset($data->photo) || !isset($data->category)) {
     http_response_code(400);
-    echo json_encode(array("message" => "Content must have specific strusture."));
+    echo json_encode(array("message" => "Content must have specific structure."));
     return;
 }
 

@@ -37,7 +37,9 @@ async function displayDresses(category) {
             if (response.ok)
                 return response.json();
             else {
-                if (response.status === 404)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 404)
                     return Promise.reject(`Šaty z kategórie ${category} sa nenašli.`);
                 else if (response.status === 500)
                     return Promise.reject(`Nastala chyba pri vyberaní šiat kategórie ${category}.`);
@@ -173,7 +175,9 @@ async function addDress(event) {
                 onSuccess("Šaty pridané.")
                 return Promise.resolve();
             } else {
-                if (response.status === 507)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 507)
                     return Promise.reject(`Šaty už existujú.`);
                 else
                     return Promise.reject("Niekde nastala chyba...");
@@ -218,7 +222,9 @@ function deleteDress(dressId, category) {
                 onSuccess("Šaty vymazané.");
                 return Promise.resolve();
             } else {
-                if (response.status === 404)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 404)
                     return Promise.reject(`Šaty s id ${dressId} sa nenašli.`);
                 else if (response.status === 500)
                     return Promise.reject(`Nastala chyba pri vymazávaní šiat s id ${dressId}.`);
@@ -242,7 +248,9 @@ function displayUpdateDress(dressId) {
             if (response.ok)
                 return response.json();
             else {
-                if (response.status === 404)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 404)
                     return Promise.reject(`Šaty s id ${dressId} sa nenašli.`);
                 else if (response.status === 500)
                     return Promise.reject(`Nastala chyba pri vyberaní šiat s id ${dressId}.`);
@@ -330,7 +338,9 @@ async function updateDress(event) {
                 onSuccess("Šaty upravené.");
                 return Promise.resolve();
             } else {
-                if (response.status === 404)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 404)
                     return Promise.reject(`Šaty s id ${id} sa nenašli.`);
                 else if (response.status === 500)
                     return Promise.reject(`Nastala chyba pri upravovaní šiat s id ${id}.`);
@@ -390,7 +400,9 @@ function processOrdering(toUpdate) {
                 onSuccess("Šaty usporiadané.");
                 return Promise.resolve();
             } else {
-                if (response.status === 404)
+                if (response.status === 400)
+                    return Promise.reject("Obsah požiadavky nie je správny.");
+                else if (response.status === 404)
                     return Promise.reject(`Šaty sa nenašli.`);
                 else if (response.status === 500)
                     return Promise.reject(`Nastala chyba pri usporiadavaní šiat.`);
