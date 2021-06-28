@@ -4,11 +4,13 @@ Webpage for Salon-Vivien.
 front-end:
 o nas (default) - fotka pozadie na to text
 
-svadobne saty - fotky (mozno strankovanie) (oznacenie pozicanie/predaj)
-    -> dalsie fotky a popis
+svadobne saty
+    -> karty v gride s fotkou, menom, popisom, pozicanie/predaj
+    -> po kliknuti na fotku sa zobrazi modalne okno s fotkami
 
-spolocenske saty - fotky (mozno strankovanie) (oznacenie pozicanie/predaj)
-    -> dalsie fotky a popis
+spolocenske saty
+    -> karty v gride s fotkou, menom, popisom, pozicanie/predaj
+    -> po kliknuti na fotku sa zobrazi modalne okno s fotkami
 
 svadobne doplnky
     -> svadobne topanky - fotka do pozadia a text
@@ -36,8 +38,8 @@ javascript router s mustache sablonami
 
 back-end:
 databaza - mysql
-    tabulka -> dress (dress_id, name, size, color, description, price, photo, category)
-            -> category (category_id, category)
+    tabulka -> dress (dress_id, name, size, color, description, price, photo, category, ordering)
+    trigger -> pri vytvoreni zaznamu sa prida zaznam do stlpca ordering
 
 REST API pomocou node.js
     -> /api/dress -> GET, POST
@@ -52,3 +54,27 @@ REST API pomocou node.js
         -> getByCategory - vrati vsetky zaznamy z tabulky dress zo zadanej kategorie
     -> /api/imagesUpload -> POST
         -> upload - prida nazvy fotiek do databazy a fotky ulozi do suboru ./public/figures/uploads
+
+PHP
+    -> createDress.php -> POST
+        -> prida zaznam do tabulky dress
+        -> obsah tela - json objekt s datami (name, size, color, price, description, photo)
+    -> deleteDress.php -> DELETE
+        -> vymaze zaznam z tabulky dress
+        -> atribut "id"
+    -> getByCategory.php -> GET
+        -> vrati zaznamy z tabulky dress, ak nie je specifikovany limit a offset tak vrati vsetky + pocet "total"
+        -> atributy "category", "limit", "offset"
+    -> getById.php -> GET
+        -> vrati jeden zaznam z tabulky dress
+        -> atribut "id"
+    -> updateDress.php -> PUT
+        -> upravi zaznam v tabulke dress
+        -> atribut "id"
+        -> obsah tela - json objekt s datami (name, size, color, price, description, photo)
+    -> updateOrdering.php -> PUT
+        -> upravi stlpec "ordering" v tabulke dress
+        -> obsah tela - json objekt s datami (id, ordering)
+    -> uploadImage -> POST
+        -> ulozi obrazok na server a posle string s menami obrazkov
+        -> obsah tela - subory
