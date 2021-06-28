@@ -39,7 +39,7 @@ export const dresses = () => {
             <article class="card">
     <!--  card head -->
             <div class="card__eye">
-                <i class="fas fa-eye" onclick="handleModal('{{id_dress}}')"></i>
+                <i class="fas fa-eye" style="cursor: pointer" onclick="handleModal('{{id_dress}}')"></i>
               </div>
               <header class="card__thumb">
                 <img class="hover-shadow cursor" 
@@ -61,7 +61,7 @@ export const dresses = () => {
                   </div>
                 </div>
                 <p class="card__description">
-                  Veľkosť: {{size}} <br>
+                  Veľkosť: {{size}}
                 </p>
               </div>
             </article>

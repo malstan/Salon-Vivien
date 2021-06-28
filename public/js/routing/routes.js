@@ -8,6 +8,8 @@ import {home, dresses, contact} from "../templates/templates.js";
 import {errorDresses, preparing} from "../templates/templates-error.js";
 import Mustache from "../mustache.js";
 
+const serverUrl = `http://127.0.0.1/salon-vivien/server/php/dress`;
+
 export default [
     {
         hash: "home",
@@ -63,12 +65,10 @@ function prepareForFetchDresses(targetElm, category, currentPage) {
  * @param page - pagination
  */
 function fetchDresses(targetElm, category, page) {
-    // const url = `https://salon-vivien.sk/test/server/dress/getByCategory.php?category=${category}&limit=20&offset=${(page - 1) * 20}`;
-    const url = `http://localhost/salon-vivien/server/dress/getByCategory.php?category=${category}&limit=20&offset=${(page - 1) * 20}`;
     let dressList = [];
     let total = 0;
 
-    fetch(url)
+    fetch(`${serverUrl}/getByCategory.php?category=${category}&limit=20&offset=${(page - 1) * 20}`)
         .then(response => {
             if (response.ok)
                 return response.json();
@@ -81,7 +81,7 @@ function fetchDresses(targetElm, category, page) {
         })
         .then(responseJSON => {
             /* response -> dresses[
-                                [id_dress, name, size, color, description, price, photo, category]
+                                [id_dress, name, size, color, description, price, photo, category, ordering]
                             ],
                             total
             */
@@ -106,7 +106,7 @@ function fetchDresses(targetElm, category, page) {
 function renderDresses(targetElm, dressList, category, current, total) {
     current = parseInt(current);
 
-    /* prepare dress object for rendering */
+    // prepare dress object for rendering
     dressList.map((dress, index) => {
         if (dress.price > 0)
             dress.sale = true;
@@ -115,7 +115,7 @@ function renderDresses(targetElm, dressList, category, current, total) {
         dress.color = dress.color.split(", ");
     });
 
-    /* set proper page as active */
+    // set proper page as active
     let pages = Array.from({length: total}, (x, i) => ({page: i + 1, class: ""}));
     pages[current - 1].class = "active";
 
@@ -126,13 +126,13 @@ function renderDresses(targetElm, dressList, category, current, total) {
         dresses: dressList,
     };
 
-    /* set prev and next page */
+    // set prev and next page
     if (current > 1)
         dataForRendering.prev = current - 1;
     if (current < total)
         dataForRendering.next = current + 1;
 
-    /* set category as text */
+    // set category as text
     category === 1 ? dataForRendering.categorySK = "Spoločenské" : dataForRendering.categorySK = "Svadobné";
     category === 1 ? dataForRendering.categoryEN = "formal" : dataForRendering.categoryEN = "wedding";
 

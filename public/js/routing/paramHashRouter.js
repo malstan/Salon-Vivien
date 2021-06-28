@@ -13,7 +13,6 @@ export default class ParamHashRouter {
         this.doRouting();
     }
 
-
     doRouting() {
         let hash = window.location.hash;
 
@@ -28,6 +27,4 @@ export default class ParamHashRouter {
             }
         }
     }
-
-
 }

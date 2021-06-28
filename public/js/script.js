@@ -26,10 +26,14 @@ navMain.on("click", ".js-hide", null, () => {
     $(".hamburger").removeClass("active");
 });
 
-// hide menu on scroll
+// show/hide menu on scroll
+let prevPosition = window.pageYOffset;
+
 window.onscroll = () => {
-    if (window.pageYOffset < 56)
+    const currentPosition = window.pageYOffset;
+    if (prevPosition > currentPosition)
         document.getElementById("js-navbar").style.top = "0";
     else
         document.getElementById("js-navbar").style.top = "-80px";
+    prevPosition = currentPosition;
 }
