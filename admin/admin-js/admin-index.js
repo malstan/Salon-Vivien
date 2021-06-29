@@ -48,10 +48,13 @@ async function displayDresses(category) {
             }
         })
         .then(responseJSON => {
+            let dresses = responseJSON.dresses;
+            dresses.map(dress => dress.price = parseFloat(dress.price).toFixed(2));
+
             // display dresses
             document.getElementById(`category-${category}`).innerHTML = mustache.render(
                 document.getElementById("dresses-template").innerHTML,
-                {data: responseJSON.dresses, category: category}
+                {data: dresses, category: category}
             );
         })
         .catch(error => onError(error));

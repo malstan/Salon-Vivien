@@ -86,6 +86,8 @@ function fetchDresses(targetElm, category, page) {
                             total
             */
             dressList = responseJSON.dresses;
+            dressList.map(dress => dress.price = parseFloat(dress.price).toFixed(2));
+
             total = Math.ceil(responseJSON.total / 20);
             return Promise.resolve();
         })
