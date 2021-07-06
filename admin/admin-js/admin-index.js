@@ -245,6 +245,8 @@ function deleteDress(dressId, category) {
  * @param dressId - id of dress
  */
 function displayUpdateDress(dressId) {
+
+    let dress = [];
     // get one dress by id
     fetch(`${serverUrl}/getById.php?id=${dressId}`)
         .then(response => {
@@ -262,20 +264,22 @@ function displayUpdateDress(dressId) {
             }
         })
         .then(responseJSON => {
+            dress = responseJSON.dress;
+
             // fill form with data
             document.getElementById("updateDress").innerHTML = mustache.render(
                 document.getElementById("updateDress-template").innerHTML,
-                responseJSON.dress
+                dress
             );
 
             // fill category in form
-            document.getElementById("upcategory").value = parseInt(responseJSON.dress.category);
+            document.getElementById("upcategory").value = parseInt(dress.category);
 
             // show modal with form for update dress
             const modal = new bootstrap.Modal(document.querySelector("#modalUpdateDress"));
             modal.show();
 
-            document.getElementById("updateDressForm").onsubmit = updateDress;
+            document.getElementById("updateDressForm").addEventListener("submit", event => updateDress(event, dress));
         })
         .catch(error => onError(error));
 }
@@ -283,9 +287,10 @@ function displayUpdateDress(dressId) {
 /**
  * update dress
  * @param event
+ * @param dress
  * @returns {Promise<void>}
  */
-async function updateDress(event) {
+async function updateDress(event, dress) {
     event.preventDefault();
 
     const updateDressForm = document.getElementById("updateDressForm");
@@ -324,6 +329,15 @@ async function updateDress(event) {
         category: category,
         photo: photo
     };
+
+    // check if data has been changed
+    delete dress.id_dress;
+    delete dress.ordering;
+
+    if (_.isEqual(dress, updateDress)) {
+        onError("Nie je čo zmeniť.");
+        return;
+    }
 
     const putRequest = {
         headers: {
