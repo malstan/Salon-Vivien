@@ -37,3 +37,67 @@ window.onscroll = () => {
         document.getElementById("js-navbar").style.top = "-80px";
     prevPosition = currentPosition;
 }
+
+/**
+ * on scroll
+ */
+const scrollOffset = 0;
+
+const listenToChange = () => {
+    if (location.hash === "#home")
+        scrollAnimation();
+}
+
+window.onload = listenToChange;
+window.onhashchange = listenToChange;
+
+async function scrollAnimation() {
+    // wait until elements exist
+    while (document.querySelectorAll(".js-scroll").length === 0)
+        await new Promise(r => setTimeout(r, 500));
+
+    const scrollElements = document.querySelectorAll(".js-scroll");
+
+    scrollElements.forEach(elm => elm.style.opacity = '0');
+
+    // check if element is in view
+    const elementInView = (elm, scrollOffset) => {
+        const elementTop = elm.getBoundingClientRect().top;
+        return (elementTop <= ((window.innerHeight || document.documentElement.clientHeight) - scrollOffset));
+    }
+    // show element
+    const displayScrollElement = elm => elm.classList.add("scrolled");
+    //hide element
+    const hideScrollElement = elm => elm.classList.remove("scrolled");
+
+    // handling
+    const handleScrollAnimation = () => {
+        scrollElements.forEach(elm => {
+            if (elementInView(elm, scrollOffset))
+                displayScrollElement(elm);
+            else
+                hideScrollElement(elm);
+        })
+    };
+
+    let throttleTimer = false;
+    const throttle = (callback, time) => {
+        if (throttleTimer) return;
+
+        throttleTimer = true;
+
+        setTimeout(() => {
+            callback();
+            throttleTimer = false;
+        }, time);
+    };
+
+    handleScrollAnimation();
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    window.addEventListener('scroll', () => {
+        if (mediaQuery && !mediaQuery.matches)
+            throttle(handleScrollAnimation, 250);
+    });
+}

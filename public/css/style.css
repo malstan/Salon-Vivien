@@ -3,6 +3,9 @@
  * 2021
  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bree Serif');
+@import url('https://fonts.googleapis.com/css2?family=PT Sans');
+@import url('https://fonts.googleapis.com/css2?family=Dancing Script:wght@600&display=swap"');
 @import './variables.css';
 
 * {
@@ -88,8 +91,110 @@ nav {
 }
 
 #home, #home > div {
-    height: 80vh;
     color: var(--silverPinkDarker);
+    font-family: 'Bree Serif', sans-serif;
+    font-size: 1.2em;
+}
+
+.citation {
+    font-family: 'Dancing Script', cursive;
+    padding-bottom: 1.5em;
+}
+
+.withDress {
+    margin: 5em 0;
+}
+
+.withDress ul li {
+    list-style-type: none;
+    padding: 0.5em;
+    font-size: 1em;
+}
+
+.withDress ul {
+    padding: 0;
+}
+
+/**
+ * scroll animation
+ */
+.js-scroll {
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+.js-scroll.scrolled {
+    opacity: 1;
+}
+
+.scrolled.fade-up {
+    animation: fade-up 1s ease-in-out both;
+}
+
+.scrolled.fade-right {
+    animation: fade-right 1s ease-in-out both;
+}
+
+.scrolled.fade-left {
+    animation: fade-left 1s ease-in-out both;
+}
+
+.scroll-container :nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.scroll-container :nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.scroll-container :nth-child(4) {
+    animation-delay: 1.2s;
+}
+
+.scroll-container :nth-child(5) {
+    animation-delay: 1.6s;
+}
+
+@keyframes fade-up {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-right {
+    0% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-left {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion) {
+    .js-scroll {
+        opacity: 1;
+    }
+    .scrolled {
+        animation: none !important;
+    }
 }
 
 /* pagination */
@@ -148,6 +253,22 @@ nav {
 .table-contact {
     width: 70%;
     margin: auto;
+}
+
+.product-decoration {
+    color: var(--unbleachedSilk);
+}
+
+.myText {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    color: var(--silverPinkDarker);
+    padding-top: 2em;
+}
+
+#gallery > div {
+    cursor: pointer;
+    margin-bottom: 0.6em;
 }
 
 /**
@@ -209,6 +330,19 @@ nav {
 }
 
 /**
+ * <500px
+ */
+@media only screen and (max-width: 500px) {
+    .scroll-container :nth-child(4) {
+        animation-delay: 0s;
+    }
+
+    .scroll-container :nth-child(5) {
+        animation-delay: 0s;
+    }
+}
+
+/**
  * <768px
  */
 @media only screen and (max-width: 768px) {
@@ -240,5 +374,17 @@ nav {
 
     .hamburger.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
+    }
+    /* because of when div is hidden - -100px, navbar is wider then display width */
+    .scrolled.fade-right {
+        animation: fade-left 1s ease-in-out both;
+    }
+
+    .myText, #home {
+        font-size: 1em;
+    }
+
+    .withDress ul li {
+        font-size: 0.9em;
     }
 }

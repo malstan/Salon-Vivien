@@ -4,7 +4,7 @@
  * javascript router
  * fetching dresses
  */
-import {home, dresses, contact} from "../templates/templates.js";
+import {home, dresses, contact, shoes, coats, veils, jewellery, gowns} from "../templates/templates.js";
 import {errorDresses, preparing} from "../templates/templates-error.js";
 import Mustache from "../mustache.js";
 
@@ -14,7 +14,7 @@ export default [
     {
         hash: "home",
         target: "router-view",
-        getTemplate: (targetElm) => document.getElementById(targetElm).innerHTML = home(),
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = home(),
     },
     {
         hash: "dresses",
@@ -22,14 +22,39 @@ export default [
         getTemplate: prepareForFetchDresses,
     },
     {
+        hash: "shoes",
+        target: "router-view",
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = shoes(),
+    },
+    {
+        hash: "coats",
+        target: "router-view",
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = coats(),
+    },
+    {
+        hash: "jewellery",
+        target: "router-view",
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = jewellery(),
+    },
+    {
+        hash: "veils",
+        target: "router-view",
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = veils(),
+    },
+    {
+        hash: "gowns",
+        target: "router-view",
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = gowns(),
+    },
+    {
         hash: "contact",
         target: "router-view",
-        getTemplate: (targetElm) => document.getElementById(targetElm).innerHTML = contact(),
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = contact(),
     },
     {
         hash: "preparing",
         target: "router-view",
-        getTemplate: (targetElm => document.getElementById(targetElm).innerHTML = preparing()),
+        getTemplate: targetElm => document.getElementById(targetElm).innerHTML = preparing(),
     },
 ];
 
