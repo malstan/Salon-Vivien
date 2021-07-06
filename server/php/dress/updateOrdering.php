@@ -10,7 +10,7 @@ include('../config/database.php');
 
 // check method
 if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
-    http_response_code(400);
+    http_response_code(405);
     echo json_encode(array("message" => "Request is not a PUT."));
     return;
 }
