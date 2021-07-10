@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- TODO - fill -->
+
     <meta name="description" content="V ponuke nášho salónu nájdete svadobné šaty od veľkosti 34 do veľkosti 54. Modely od svetových značiek Eva Lendel, Jarice Belgium, Art Design, Divina Sposa Vám ponúkajú širokú variabilitu materiálov, strihov a farieb, čím vieme uspokojiť aj tie najnáročnejšie nevesty. ">
 
     <title>Salon-Vivien</title>
 
-    <!--
-    <base href="https://salon-vivien.sk">
-    <link rel="icon" type="image/png" href="">
-    -->
+    <link rel="icon" type="image/png" href="public/figures/logo_vivien.png">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" rel="stylesheet">
+
+    <link href="public/css/owl.carousel.css" media="screen" rel="stylesheet">
+    <link href="public/css/owl.theme.default.css" media="screen" rel="stylesheet">
 
     <link href="public/css/style.css" media="screen" rel="stylesheet">
     <link href="public/css/card-style.css" media="screen" rel="stylesheet">
@@ -30,7 +30,9 @@
 <!-- NAVBAR -->
 <nav id="js-navbar" class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">LOGO</a>
+        <a class="navbar-brand" href="#home">
+            <img src="public/figures/logo-vivien.jpg" alt="logo Salón Vivien">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse"
                 aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="hamburger">
@@ -96,6 +98,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
         crossorigin="anonymous"></script>
+<script src="public/js/owl.carousel.js"></script>
+
+<script>
+    $(document).ready(() => {
+        $(".owl-carousel").owlCarousel({
+            margin: 20,
+            loop: true,
+            nav: true,
+            dotsEach: true,
+            responsive: {
+                0: {items: 1},
+
+                1024: {items: 2},
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

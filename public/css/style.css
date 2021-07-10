@@ -6,6 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree Serif');
 @import url('https://fonts.googleapis.com/css2?family=PT Sans');
 @import url('https://fonts.googleapis.com/css2?family=Dancing Script:wght@600&display=swap"');
+@import url('https://fonts.googleapis.com/css2?family=Merienda');
 @import './variables.css';
 
 * {
@@ -64,6 +65,14 @@ nav {
     display: none;
 }
 
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-brand > img {
+    width: 170px;
+}
+
 .bar {
     display: block;
     width: 35px;
@@ -102,7 +111,8 @@ nav {
 }
 
 .withDress {
-    margin: 5em 0;
+    margin-top: 7em;
+    padding-bottom: 2em;
 }
 
 .withDress ul li {
@@ -197,6 +207,22 @@ nav {
     }
 }
 
+/**
+ * TESTIMONIALS
+ */
+
+.testimonial-container {
+    margin-top: 7em;
+    padding-bottom: 2em;
+}
+
+.testimonial-citation {
+    font-style: italic;
+    font-family: 'Merienda', serif;
+    font-size: medium;
+}
+
+
 /* pagination */
 .page-link {
     color: var(--silverPinkDarker);
@@ -231,10 +257,6 @@ nav {
     text-decoration: none;
 }
 
-.contact {
-    font-size: large;
-}
-
 .myTitle {
     margin: 2em;
 }
@@ -251,7 +273,7 @@ nav {
 }
 
 .table-contact {
-    width: 70%;
+    width: 50%;
     margin: auto;
 }
 
@@ -340,6 +362,10 @@ nav {
     .scroll-container :nth-child(5) {
         animation-delay: 0s;
     }
+
+    .table-contact {
+        width: 100%;
+    }
 }
 
 /**
@@ -352,9 +378,9 @@ nav {
 }
 
 /**
- * <991px
+ * <1027px
  */
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 1027px) {
     #router-view {
         margin: 0;
     }
@@ -375,6 +401,11 @@ nav {
     .hamburger.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
+
+    .table_contact {
+        width: 80%;
+    }
+
     /* because of when div is hidden - -100px, navbar is wider then display width */
     .scrolled.fade-right {
         animation: fade-left 1s ease-in-out both;

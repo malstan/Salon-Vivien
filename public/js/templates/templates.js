@@ -15,19 +15,19 @@ export const home = () => {
         <div class="container pt-5">
           <h1 class="citation">Keď sa sen stáva skutočnosťou...</h1>
           <div class="scroll-container mt-5 px-4">
-              <div class="d-flex justify-content-start mb-3 scroll-element js-scroll fade-left">
+              <div class="d-flex justify-content-center mb-3 scroll-element js-scroll fade-left">
                 <p>Šaty v ktorých zažiarite v najdôležitejší deň v živote.</p>
               </div>
-              <div class="d-flex justify-content-end py-4 scroll-element js-scroll fade-right">
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-right">
                 <p>Široká variabilita materiálov, strihov a farieb.</p>
               </div>
-              <div class="d-flex justify-content-start py-4 scroll-element js-scroll fade-left">
-                <p>Na oko výnimočné modely, ale aj praktické a nositeľné zároveň.</p>
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-left">
+                <p>Svadobné šaty nie len výnímočné na pohľad, ale aj praktické a nositeľné zároveň.</p>
               </div>
-              <div class="d-flex justify-content-end py-4 scroll-element js-scroll fade-right">
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-right">
                 <p>Šaty svetoznámych značiek od veľkosti 34 do veľkosti 54.</p>
               </div>
-              <div class="d-flex justify-content-start py-4 scroll-element js-scroll fade-left">
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-left">
                 <p>Maximálne súkromie pre Vás aj Váš doprovod pri skúšaní svadobných šiat.</p>
               </div>
               
@@ -47,7 +47,29 @@ export const home = () => {
               <div class="py-4 scroll-element js-scroll fade-up">
                 <p>Najlepšia reklama je pre nás naša <b>výnimočná a spokojná nevesta</b> a našou úlohou je z každej z Vás takúto výnimočnú a spokojnú nevestu urobiť.</p>
               </div>
-          </div>
+              
+              <div class="owl-carousel owl-theme testimonial-container scroll-element js-scroll fade-up">
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Môžem povedať z vlastnej skúsenosti, že moja nastavajúca manželka bola ta najkrajšia a najnádhernešia nevesta na svete. V dverách keď som ju videl mi odišiel dych, obraz, zvuk a hlavne bola ta najkrajšia moja budúca manželka na svete kedže ani vlastný "manžel" ju nespoznal na chodbe, že aká je nádherna 😊 Nikdy neľutujem a Salón VIVIEN chválim. 😊 Ďakujem za ten nádherny pohľad a ešte krajší svadobný večer. 😊😘</p>
+                      <h4>Ján S.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Veľká vďaka Svadobnému Salónu Vivien za ochotu, trpezlivosť, radu pri vyberaní svadobných šiat, nádherný výber šiat aj závojov. Ako nevesta som navštívila mnoho salónov, ale iba v tomto som bola nadmieru spokojná. Šaty boli pohodlné a upravené podľa mojich predstáv, začo veľka vďaka celému kolektívu svadobného salónu Vivien. Móžem len a len odporúčať. 👌🤗</p>
+                      <h4>Mária Dz.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Svadobný salón mi dopomohol splniť si môj sen krásnymi svadobnými šatami a k popolnočným nemám slov - nikto neprehliadol, že prišla nevesta. Bola som nad mieru spokojná, milý a ochotný personal. Určite odporúčam odomňa 💯 bodov! Veľké ďakujem 😀😘😇👰💍💒🎁😉</p>
+                      <h4>Vierka J.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">V tomto úžasnom Salóne sú skvelí, milí a najmä ochotní ľudia, ktorí vedia poradiť pri výbere šiat. Nevnucujú to, čo sa zákazníčke nehodí ale pomôžu vybrať to najlepšie. ODPORÚČAM. </p>
+                      <h4>Petra Z.</h4>
+                    </div>
+              </div>
           </div>
         </div>
       </div>
@@ -62,8 +84,7 @@ export const home = () => {
 export const dresses = () => {
     return (`
     <article class="text-center">
-      <h1 class="m-5">{{categorySK}} šaty</h1>
-      <div class="container">
+      <div class="container pt-5">
         <div class="row">
     <!-- start iterating through dresses -->
           {{#dresses}}
@@ -180,14 +201,16 @@ export const dresses = () => {
  */
 export const contact = () => {
     return (`
-    <article class="contact text-center">
-      <h1 class="myTitle">Kontakt</h1>
-      <div class="container">
+    <article class="text-center">
+      <div class="container myText">
           <div class="row">
             <div class="col-md mb-4">
     <!-- info -->
-                <p class="mb-4"><i class="fas fa-phone fa-lg"></i>  0905 349 676</p>
-                <p class="mb-4"><i class="fas fa-home fa-lg"></i>  Námestie Slobody 52 Sabinov</p>
+                <p>Odporúčame sa na skúšanie svadobných a spoločenských šiat <b>vopred objednať telefonicky.</b></p>
+                <p>V opačnom prípade Vám nevieme zaručiť skúšanie šiat vo Vami zvolenom, ale neohlásenom termíne.</p>
+                <br>
+                <p class="my-4"><i class="fas fa-phone fa-lg"></i>  0905 349 676</p>
+                <p class="mb-4"><i class="fas fa-home fa-lg"></i>  Námestie Slobody 52, 083 01 Sabinov</p>
                 <table class="table-contact mb-4">
                     <tr>
                         <th>Pondelok</th>
@@ -220,16 +243,13 @@ export const contact = () => {
                 </table>
     <!-- social media links -->
                 <div>
-                  <a class="btn myButton px-3 py-2 me-3" style="background-color: #3b5998;" href="https://www.facebook.com/SalonVivienSabinov" role="button">
+                  <a class="btn myButton px-3 py-2 me-3" style="background-color: #3b5998;" href="https://www.facebook.com/SalonVivienSabinov" target="_blank" role="button">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn myButton px-3 py-2" style="background-color: #ac2bac;" href="https://instagram.com/svadobnysalonvivien" role="button">
+                  <a class="btn myButton px-3 py-2" style="background-color: #ac2bac;" href="https://instagram.com/svadobnysalonvivien" target="_blank" role="button">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
-            </div>
-            <div class="col-md">
-              <img class="w-100 rounded" src="public/figures/shop.jpg" alt="shop image">
             </div>
           </div>
       </div>

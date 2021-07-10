@@ -160,7 +160,6 @@ function renderDresses(targetElm, dressList, category, current, total) {
         dataForRendering.next = current + 1;
 
     // set category as text
-    category === 1 ? dataForRendering.categorySK = "Spoločenské" : dataForRendering.categorySK = "Svadobné";
     category === 1 ? dataForRendering.categoryEN = "formal" : dataForRendering.categoryEN = "wedding";
 
     document.getElementById(targetElm).innerHTML = Mustache.render(dresses(), dataForRendering);

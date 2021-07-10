@@ -5,6 +5,7 @@
  */
 
 @import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=PT Sans');
 
 /**
 * CARD
@@ -16,6 +17,8 @@
     overflow: hidden;
     -webkit-transition: box-shadow 0.5s;
     transition: box-shadow 0.5s;
+    font-family: 'PT Sans', sans-serif;
+    color: var(--silverPinkDarker);
 }
 
 .card a {
@@ -44,7 +47,7 @@
 **/
 
 .card__thumb {
-    height: 245px;
+    height: 295px;
     overflow: hidden;
     background-color: transparent;
     -webkit-transition: height 0.5s;
@@ -63,7 +66,7 @@
 }
 
 .card:hover .card__thumb {
-    height: 130px;
+    height: 165px;
 }
 
 .card:hover .card__thumb img {
@@ -72,21 +75,20 @@
     transform: scale(1.2);
 }
 
-
 /**
 * card_BODY
 **/
 
 .card__body {
     position: relative;
-    height: 130px;
+    height: 80px;
     padding: 10px;
     -webkit-transition: height 0.5s;
     transition: height 0.5s;
 }
 
 .card:hover .card__body {
-    height: 250px;
+    height: 210px;
 }
 
 .card__sale {
@@ -111,9 +113,7 @@
 .card__title {
     margin: 0;
     padding: 0 0 10px 0;
-    color: #000;
     font-size: 22px;
-    font-weight: bold;
     text-transform: uppercase;
 }
 
@@ -122,7 +122,6 @@
     padding: 0 0 10px 0;
     font-size: 19px;
     justify-items: center;
-    color: var(--silverPinkDarker);
 }
 
 .colors > span {
@@ -142,7 +141,6 @@
 .card__description {
     margin: 0;
     padding-top: 2em;
-    color: #666C74;
     line-height: 27px;
     opacity: 0;
     -webkit-transform: translateY(45px);
@@ -167,7 +165,6 @@
     left: 20px;
     right: 20px;
     font-size: 11px;
-    color: #A3A9A2;
 }
 
 .icon {

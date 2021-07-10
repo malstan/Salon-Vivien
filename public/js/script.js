@@ -31,7 +31,7 @@ let prevPosition = window.pageYOffset;
 
 window.onscroll = () => {
     const currentPosition = window.pageYOffset;
-    if (prevPosition > currentPosition)
+    if (prevPosition >= currentPosition)
         document.getElementById("js-navbar").style.top = "0";
     else
         document.getElementById("js-navbar").style.top = "-80px";
