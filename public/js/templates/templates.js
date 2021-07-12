@@ -14,7 +14,9 @@ export const home = () => {
       <div class="text-center" style="background-color: rgba(255,255,255, 0.75)">
         <div class="container pt-5">
           <h1 class="citation">Keď sa sen stáva skutočnosťou...</h1>
+          
           <div class="scroll-container mt-5 px-4">
+              <!-- first texts -->
               <div class="d-flex justify-content-center mb-3 scroll-element js-scroll fade-left">
                 <p>Šaty v ktorých zažiarite v najdôležitejší deň v živote.</p>
               </div>
@@ -31,6 +33,7 @@ export const home = () => {
                 <p>Maximálne súkromie pre Vás aj Váš doprovod pri skúšaní svadobných šiat.</p>
               </div>
               
+              <!-- second texts -->
               <div class="withDress scroll-element js-scroll fade-up">
                 <h2 class="my-4"><u>Čo dostanete k svadobným šatám?</u></h2>
                 <ul>
@@ -48,6 +51,7 @@ export const home = () => {
                 <p>Najlepšia reklama je pre nás naša <b>výnimočná a spokojná nevesta</b> a našou úlohou je z každej z Vás takúto výnimočnú a spokojnú nevestu urobiť.</p>
               </div>
               
+              <!-- testimonials -->
               <div class="owl-carousel owl-theme testimonial-container scroll-element js-scroll fade-up">
                     <div class="item">
                       <span class="fas fa-quote-left fa-2x"></span>
@@ -66,8 +70,8 @@ export const home = () => {
                     </div>
                     <div class="item">
                       <span class="fas fa-quote-left fa-2x"></span>
-                      <p class="testimonial-citation my-4">V tomto úžasnom Salóne sú skvelí, milí a najmä ochotní ľudia, ktorí vedia poradiť pri výbere šiat. Nevnucujú to, čo sa zákazníčke nehodí ale pomôžu vybrať to najlepšie. ODPORÚČAM. </p>
-                      <h4>Petra Z.</h4>
+                      <p class="testimonial-citation my-4">Ďakujem krásne za úžasné svadobné šaty v ktorých som sa cítila ako princezná. Odporúčam salón všetkými desiatimi 🤗</p>
+                      <h4>Daniela K.</h4>
                     </div>
               </div>
           </div>

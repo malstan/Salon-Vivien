@@ -34,7 +34,7 @@ window.onscroll = () => {
     if (prevPosition >= currentPosition)
         document.getElementById("js-navbar").style.top = "0";
     else
-        document.getElementById("js-navbar").style.top = "-80px";
+        document.getElementById("js-navbar").style.top = "-88px";
     prevPosition = currentPosition;
 }
 

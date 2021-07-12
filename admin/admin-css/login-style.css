@@ -13,6 +13,9 @@
 .company__info {
     background-color: var(--linen);
     color: var(--silverPink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 img {width: 90%}

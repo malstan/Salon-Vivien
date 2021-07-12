@@ -60,6 +60,11 @@ nav {
     outline: none;
 }
 
+
+.navbar-brand > img {
+    width: 180px;
+}
+
 /* hamburger */
 .hamburger {
     display: none;
@@ -67,10 +72,6 @@ nav {
 
 .navbar-brand {
     padding: 0;
-}
-
-.navbar-brand > img {
-    width: 170px;
 }
 
 .bar {
