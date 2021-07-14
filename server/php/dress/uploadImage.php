@@ -5,7 +5,7 @@
  * upload image
  */
 
-header('Access-Control-Allow-Origin: http://salon-vivien.sk', false);
+header('Access-Control-Allow-Origin: https://salon-vivien.sk', false);
 include('../config/database.php');
 
 // check method
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     return;
 }
 
-$destination = "../../../public/figures/uploads/";
+$destination = "../../public/figures/uploads/";
 
 // check content
 $count = count($_FILES['images']['name']);

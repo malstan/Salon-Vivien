@@ -73,6 +73,11 @@ export const home = () => {
                       <p class="testimonial-citation my-4">Ďakujem krásne za úžasné svadobné šaty v ktorých som sa cítila ako princezná. Odporúčam salón všetkými desiatimi 🤗</p>
                       <h4>Daniela K.</h4>
                     </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Ja napíšem len toľko : Ďakujem Vám za skvelý prístup a za tie najkrajšie šaty aké som si mohla priať 🙂 navštíviť vás salón bolo to najlepšie rozhodnutie ♥️</p>
+                      <h4>Marcela P.</h4>
+                    </div>
               </div>
           </div>
         </div>
@@ -128,7 +133,7 @@ export const dresses = () => {
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="ModalLabel-{{id_dress}}">{{name}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
                   </div>
                   <div class="modal-body">
         <!-- carousel -->
@@ -140,11 +145,11 @@ export const dresses = () => {
                         </div>
                         {{/photo}}
                       </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls-{{id_dress}}" data-bs-slide="prev">
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls-{{id_dress}}" data-bs-slide="prev" aria-label="Prev image">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Predchadzajúce</span>
                       </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls-{{id_dress}}" data-bs-slide="next">
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselControls-{{id_dress}}" data-bs-slide="next" aria-label="Next image">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Ďalšie</span>
                       </button>
@@ -412,7 +417,7 @@ export const shoes = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Svadobné topánky</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
               </div>
               <div class="modal-body">
                 <!-- carousel -->
@@ -504,11 +509,11 @@ export const shoes = () => {
                       <img src="public/figures/shoes/ozdoba_9.jpg" class="d-block w-100" alt="ozdoba na topánky 9">
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev">
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev" aria-label="Prev image">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next">
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next" aria-label="Next image">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>
@@ -648,7 +653,7 @@ export const coats = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Svadobný kabátiky</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
               </div>
               <div class="modal-body">
                 <!-- carousel -->
@@ -730,11 +735,11 @@ export const coats = () => {
                       <img src="public/figures/coats/coat_25.jpg" class="d-block w-100" alt="svadobný kabátik 25">
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev">
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev" aria-label="Prev image">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next">
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next" aria-label="Next image">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>
@@ -838,7 +843,7 @@ export const veils = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Závoj</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
               </div>
               <div class="modal-body">
                 <!-- carousel -->
@@ -878,11 +883,11 @@ export const veils = () => {
                       <img src="public/figures/veils/veil_11.jpg" class="d-block w-100" alt="svadobný závoj 11">
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev">
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev" aria-label="Prev image">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next">
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next" aria-label="Next image">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>
@@ -997,7 +1002,7 @@ export const jewellery = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Bižutéria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
               </div>
               <div class="modal-body">
                 <!-- carousel -->
@@ -1049,11 +1054,11 @@ export const jewellery = () => {
                       <img src="public/figures/jewellery/jewellery_15.jpg" class="d-block w-100" alt="šperk 15">
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev">
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev" aria-label="Prev image">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next">
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next" aria-label="Next image">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>
@@ -1120,7 +1125,7 @@ export const gowns = () => {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Svadobný župan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close carousel"></button>
               </div>
               <div class="modal-body">
                 <!-- carousel -->
@@ -1136,11 +1141,11 @@ export const gowns = () => {
                       <img src="public/figures/gowns/gown_3.jpg" class="d-block w-100" alt="svadobný župan 3">
                     </div>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev">
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gallery" data-bs-slide="prev" aria-label="Prev image">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next">
+                  <button class="carousel-control-next" type="button" data-bs-target="#carousel-gallery" data-bs-slide="next" aria-label="Next image">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>

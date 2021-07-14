@@ -1,3 +1,8 @@
+/**
+ * Stanislav Malik
+ * 2021
+ * javascript for salon-vivien.sk
+ */
 // hamburger icon
 const hamburger = document.querySelector(".hamburger");
 hamburger.addEventListener("click", () => hamburger.classList.toggle("active"));

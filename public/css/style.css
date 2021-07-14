@@ -1,6 +1,7 @@
 /**
  * Stanislav Malik
  * 2021
+ * CSS for salon-vivien.sk
  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bree Serif');
@@ -60,7 +61,6 @@ nav {
     outline: none;
 }
 
-
 .navbar-brand > img {
     width: 180px;
 }
@@ -93,7 +93,7 @@ nav {
  */
 
 #home {
-    background-image: url('../figures/MARMARA2.jpg');
+    background-image: url('../figures/title_image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
