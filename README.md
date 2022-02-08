@@ -1,6 +1,8 @@
 # Salon-Vivien
 Webpage for Salon-Vivien.
 
+https://www.salon-vivien.sk
+
 front-end:
 o nas (default) - fotka pozadie na to text
 
