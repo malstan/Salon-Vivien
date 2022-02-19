@@ -10,6 +10,94 @@
  */
 export const home = () => {
     return (`
+    <article>
+      <div class="text-center">
+
+          <div class="img-1">
+          <div style="background-color: rgba(255,255,255, 0.75); padding: 5em 0">
+            <h1 class="citation">Keď sa sen stáva skutočnosťou...</h1>
+            <!-- first texts -->
+              <div class="d-flex justify-content-center mb-3 scroll-element js-scroll fade-left">
+                <p>Šaty v ktorých zažiarite v najdôležitejší deň v živote.</p>
+              </div>
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-right">
+                <p>Široká variabilita materiálov, strihov a farieb.</p>
+              </div>
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-left">
+                <p>Svadobné šaty nie len výnímočné na pohľad, ale aj praktické a nositeľné zároveň.</p>
+              </div>
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-right">
+                <p>Šaty svetoznámych značiek od veľkosti 34 do veľkosti 54.</p>
+              </div>
+              <div class="d-flex justify-content-center py-3 scroll-element js-scroll fade-left">
+                <p>Maximálne súkromie pre Vás aj Váš doprovod pri skúšaní svadobných šiat.</p>
+              </div>
+              </div>
+          </div>
+          
+          <div class="img-2">
+           <div style="background-color: rgba(255,255,255, 0.75); padding: 5em 0">
+              <!-- second texts -->
+              <div class="withDress scroll-element js-scroll fade-up">
+                <h2 class="my-4"><u>Čo dostanete k svadobným šatám?</u></h2>
+                <ul>
+                  <li>závoj a bolerko podľa vlastného výberu</li>
+                  <li>zľavu 50% na spoločenské popolnočné šaty pre seba</li>
+                  <li>zľavu 10% na spoločenské šaty pre svadobné mamy, družičky, sestry, sesternice</li>
+                </ul>
+              </div>
+              
+              <div class="py-4 scroll-element js-scroll fade-up">
+                <p>Každý rok prinášame nové kolekcie svadobných šiat. Je tu aj možnosť kúpy svadobných šiat z predošlej kolekcie za <b>výnimočné ceny</b> alebo objednania šiat na mieru z najnovšej kolekcie.</p>
+              </div>
+              
+              <div class="py-4 scroll-element js-scroll fade-up">
+                <p>Najlepšia reklama je pre nás naša <b>výnimočná a spokojná nevesta</b> a našou úlohou je z každej z Vás takúto výnimočnú a spokojnú nevestu urobiť.</p>
+              </div>
+              </div>
+          </div>
+          <div class="img-3">  
+           <div class="px-4" style="background-color: rgba(255,255,255, 0.75); padding: 5em 0">
+              <!-- testimonials -->
+              <div class="owl-carousel owl-theme testimonial-container scroll-element js-scroll fade-up">
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Môžem povedať z vlastnej skúsenosti, že moja nastavajúca manželka bola ta najkrajšia a najnádhernešia nevesta na svete. V dverách keď som ju videl mi odišiel dych, obraz, zvuk a hlavne bola ta najkrajšia moja budúca manželka na svete kedže ani vlastný "manžel" ju nespoznal na chodbe, že aká je nádherna 😊 Nikdy neľutujem a Salón VIVIEN chválim. 😊 Ďakujem za ten nádherny pohľad a ešte krajší svadobný večer. 😊😘</p>
+                      <h4>Ján S.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Veľká vďaka Svadobnému Salónu Vivien za ochotu, trpezlivosť, radu pri vyberaní svadobných šiat, nádherný výber šiat aj závojov. Ako nevesta som navštívila mnoho salónov, ale iba v tomto som bola nadmieru spokojná. Šaty boli pohodlné a upravené podľa mojich predstáv, začo veľka vďaka celému kolektívu svadobného salónu Vivien. Móžem len a len odporúčať. 👌🤗</p>
+                      <h4>Mária Dz.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Svadobný salón mi dopomohol splniť si môj sen krásnymi svadobnými šatami a k popolnočným nemám slov - nikto neprehliadol, že prišla nevesta. Bola som nad mieru spokojná, milý a ochotný personal. Určite odporúčam odomňa 💯 bodov! Veľké ďakujem 😀😘😇👰💍💒🎁😉</p>
+                      <h4>Vierka J.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Ďakujem krásne za úžasné svadobné šaty v ktorých som sa cítila ako princezná. Odporúčam salón všetkými desiatimi 🤗</p>
+                      <h4>Daniela K.</h4>
+                    </div>
+                    <div class="item">
+                      <span class="fas fa-quote-left fa-2x"></span>
+                      <p class="testimonial-citation my-4">Ja napíšem len toľko : Ďakujem Vám za skvelý prístup a za tie najkrajšie šaty aké som si mohla priať 🙂 navštíviť vás salón bolo to najlepšie rozhodnutie ♥️</p>
+                      <h4>Marcela P.</h4>
+                    </div>
+              </div>
+              </div>
+              </div>
+          </div>
+        
+      </div>
+    </article>
+    `);
+}
+
+/*
+export const home = () => {
+    return (`
     <article id="home">
       <div class="text-center" style="background-color: rgba(255,255,255, 0.75)">
         <div class="container pt-5">
@@ -85,6 +173,7 @@ export const home = () => {
     </article>
     `);
 }
+*/
 
 /**
  * display dresses
@@ -251,11 +340,11 @@ export const contact = () => {
                     </tr>
                 </table>
     <!-- social media links -->
-                <div>
-                  <a class="btn myButton px-3 py-2 me-3" style="background-color: #3b5998;" href="https://www.facebook.com/SalonVivienSabinov" target="_blank" role="button">
+                <div class="socialIcons">
+                  <a class="socialIcon" href="https://www.facebook.com/SalonVivienSabinov" target="_blank">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn myButton px-3 py-2" style="background-color: #ac2bac;" href="https://instagram.com/svadobnysalonvivien" target="_blank" role="button">
+                  <a class="socialIcon" href="https://instagram.com/svadobnysalonvivien" target="_blank">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>

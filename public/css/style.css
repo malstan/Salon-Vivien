@@ -24,6 +24,31 @@ img {
     width: 100%;
 }
 
+.img-1 {
+    background-image: url("../figures/title_image.jpg");
+}
+
+.img-2 {
+    background-image: url("../figures/uploads/joan_1_.jpg");
+}
+
+.img-3 {
+    background-image: url("../figures/uploads/teresa2.jpg");
+}
+
+.img-1, .img-2, .img-3 {
+    position: relative;
+    background-attachment: fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+
+    color: var(--silverPinkDarker);
+    font-family: 'Bree Serif', sans-serif;
+    font-size: 1.2em;
+}
+
 /**
  * NAVBAR
  */
@@ -110,12 +135,12 @@ nav {
     font-family: 'Dancing Script', cursive;
     padding-bottom: 1.5em;
 }
-
+/*
 .withDress {
     margin-top: 7em;
     padding-bottom: 2em;
 }
-
+*/
 .withDress ul li {
     list-style-type: none;
     padding: 0.5em;
@@ -213,7 +238,7 @@ nav {
  */
 
 .testimonial-container {
-    margin-top: 7em;
+    /*margin-top: 7em;*/
     padding-bottom: 2em;
 }
 
@@ -292,6 +317,48 @@ nav {
 #gallery > div {
     cursor: pointer;
     margin-bottom: 0.6em;
+}
+
+/**
+ * SOCIAL MEDIA ICONS
+ */
+.socialIcons {
+    display: flex;
+}
+
+.socialIcons .socialIcon {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    margin: 0 2rem;
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.socialIcon:after {
+    content: '';
+    width: 80px;
+    height: 80px;
+    z-index: -1;
+    position: absolute;
+    bottom: -80px;
+    left: 0;
+    background: linear-gradient(to bottom, rgb(158, 0, 231), rgb(57, 1, 211));
+    transition: 0.3s;
+}
+
+.socialIcons .socialIcon:hover {
+    color: #fff;
+}
+
+.socialIcons a:hover::after {
+    bottom: 0;
 }
 
 /**
